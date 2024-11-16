@@ -1,19 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle+Triangles&family=Ubuntu:wght@400;500&display=swap');
-
-
-:root {
-    --h2: Rubik Doodle Triangles;
-    --h3: Ubuntu;
-}
-
 form {
-    height: 90dvh;
+    height: 92dvh;
     width: 70%;
-    max-height: 90vh;
     display: grid;
+    grid-template-rows: auto 1fr auto;
     gap: 1em;
     place-items: center;
-    margin: 2dvh auto;
+    padding: 4em 0 ;
 }
 
 form h2 {
@@ -37,37 +29,48 @@ form h3 {
     font-weight: 500;
     width: 100%;
     margin-bottom: 1rem;
-    padding: 0em 4em;
     font-family: var(--h3);
 }
+
 p{
     font-family: var(--h3);
 }
 
-form .input_area textarea {
-    width: 100%;
-    /* height: 50%; */
-    border: 1px solid #ccc;
-    border-radius: 5px;
+form .input_div input[type = "text"] {
+    border: none;
+    border-radius: 10px;
     padding: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-family: 'Poppins', sans-serif;
     resize: none;
     outline: none;
+    position: relative;
 }
 
-form div textarea:focus {
-    border: 1px solid #000;
+form .input_div input[type = "text"]:focus {
+    border: none;
+}
+
+form .input_div {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 1fr 95%;
+    & img{
+        width: 2rem;
+        height: 2rem;
+        margin: auto;
+    }
+    &:has(input:focus){
+        border: 1px solid #000;
+    }
 }
 
 .difficulty {
+    margin-top: 2em;
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1em;
-    margin: auto;
 }
 
 .difficulty div {
@@ -80,10 +83,6 @@ form div textarea:focus {
 
 }
 
-.difficulty h3 {
-    flex: 0 0 100%;
-}
-
 .difficulty input {
     display: none;
 }
@@ -91,26 +90,40 @@ form div textarea:focus {
 .difficulty label {
     cursor: pointer;
     border: none;
-    padding: .5em 1em;
-    background-color: #82828246;
+    padding: .5em 2em;
+    /* background-color: #82828246; */
+    border: 1px solid #47474751;
+    box-shadow: 0 0 1px 1px #47474751;
+    border-radius: 20px;
+    &:hover {
+        background-color: var(--secondary);
+        color: white;
+        border: none;
+        box-shadow: none;
+    }
 }
 
 .difficulty input:checked+label {
-    background-color: rgb(35, 141, 255);
+    background-color: var(--tertiary);
     color: white;
+    border: none;
+    box-shadow: none;
 }
 
 form button {
     border: none;
     border-radius: 10px;
     padding: 1.5em 4em;
-    box-shadow: 0 0 5px 2px rgb(125, 146, 155);
-    background-color: rgb(3, 88, 163);
+    background-color: var(--highlight);
     color: white;
     font-size: large;
     font-weight: bold;
     cursor: pointer;
     bottom: 5%;
+    font-family: var(--h3);
+    &:hover{
+        background-color: var(--highlight-hover);
+    }
 }
 
 .loader_active {

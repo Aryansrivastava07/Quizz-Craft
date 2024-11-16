@@ -1,20 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle+Triangles&family=Ubuntu:wght@400;500&display=swap');
-
-
-:root {
-  --h2: Rubik Doodle Triangles;
-  --h3: Ubuntu;
-}
-
 .hero_section {
-  /* padding: 1em 3em; */
   min-height: 92dvh;
-  max-width: 100%;
   display: grid;
   grid-template-columns: 65% 35%;
-  /* column-gap: 2vw; */
-  /* margin: 6vh auto; */
-  /* overflow: scroll; */
+  padding: 1em;
 }
 
 @media screen and (max-width: 768px) {
@@ -22,17 +10,11 @@
     grid-template-columns: 1fr;
     row-gap: 2em;
   }
-
 }
 
 .hero_section>div {
-  /* border: solid 2px #000000; */
-  /* box-shadow: 0px 0px 10px 0px #0000001a; */
   padding: 1em 2em;
-  /* border-radius: 10px; */
-  /* box-shadow: 0 0 5px 2px rgb(125, 146, 155); */
-  /* background-color: white; */
-  overflow: hidden;
+  border-radius: 10px;
 }
 
 .selection_area,
@@ -51,25 +33,20 @@
   justify-content: center;
 }
 
+.select_pdf {
+  cursor: pointer;
+  background-color: white;
+  border: dashed 3px var(--tertiary);
+}
+
 .select_pdf p {
   font-family: var(--h3);
 }
 
 .select_pdf,
 .select_text {
-  width: 100%;
+  width: 90%;
 }
-
-.select_pdf {
-  background-color: white;
-  border: dashed 3px rgb(35, 141, 255);
-  /* border-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnWj6OuLELqG43XdQiG0ZGfFFlyfxbxaoiXnofr7Op-g&s") 1.9 round; */
-}
-
-/* .select_pdf {
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23333' stroke-width='4' stroke-dasharray='5' stroke-dashoffset='0' stroke-linecap='butt'/%3e%3c/svg%3e");
-  border-radius: 5px;
-} */
 
 .select_pdf img {
   height: 28vh;
@@ -85,25 +62,31 @@ input[type="file"] {
 .select_button {
   border-radius: 10px;
   padding: 1em 2em;
-  /* background-color: rgb(0, 136, 255); */
-  background-color: rgb(197, 42, 42);
+  background-color: var(--highlight);
   color: white;
   font-weight: bold;
   cursor: pointer;
+  &:hover {
+    background-color: var(--highlight-hover);
+  }
 }
 
 textarea {
   width: 100%;
   padding: 1em 2em;
   border-radius: 10px;
-  border: solid 2px rgba(0, 136, 255, 0.532);
+  border: solid 2px var(--secondary);
   resize: none;
   font-size: 1.2em;
   color: #00000094;
-  /* font-family: 'Courier New', Courier, monospace; */
-  /* font-weight: bold; */
-  /* color: rgb(0, 136, 255); */
-  /* background-color: rgb(228, 228, 228); */
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  background-color: rgb(228, 228, 228);
+  outline: none;
+  &:focus {
+    outline: none;
+    border: solid 2px var(--tertiary);
+  }
 }
 
 .error {
@@ -111,24 +94,13 @@ textarea {
   cursor: not-allowed;
 }
 
-/* div:is(.disabled),input:is(.disabled),textarea:is(.disabled) {
-  opacity: .3;
-  cursor: not-allowed;
-} */
-.disabled {
-  opacity: .3;
+.disabled,.disabled *{
+  opacity: .7;
   cursor: not-allowed;
   -webkit-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
-}
-
-.disabled * {
-  cursor: not-allowed;
   pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-user-drag: none;
 }
 
 .submit_button {
@@ -140,9 +112,9 @@ textarea {
   box-sizing: border-box;
   max-width: 100%;
   width: 60%;
-  box-shadow: 0 0 5px 2px rgb(125, 146, 155);
-  /* background-color: rgb(0, 136, 255); */
+  /* box-shadow: 0 0 5px 2px rgb(125, 146, 155);  */
   background-color: rgb(3, 88, 163);
+  background-color: var(--highlight);
   color: white;
   font-size: large;
   font-weight: bold;
@@ -151,8 +123,7 @@ textarea {
 }
 
 .submit_button:hover {
-  background-color: rgb(0, 64, 121);
-  /* background-color: rgb(197, 42, 42); */
+  background-color: var(--highlight-hover);
 }
 
 .submit_area {
@@ -165,8 +136,7 @@ textarea {
   width: 100%;
   margin-top: 5em;
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto auto;
   row-gap: 1.5em;
   place-items: center;
   margin-bottom: 10em;
@@ -175,14 +145,15 @@ textarea {
 
 label {
   font-family: var(--h3);
+  place-self: center;
 }
 
 .submit_area input {
-  width: 100%;
+  width: max-content;
   padding: 1em 2em;
   border-radius: 10px;
   border: none;
-  border: solid 2px rgba(0, 136, 255, 0.567);
+  border: solid 2px var(--secondary);
   background-color: rgb(255, 245, 245);
   color: rgb(0, 0, 0);
   font-weight: bold;
@@ -215,26 +186,37 @@ label {
 .difficulty label {
   cursor: pointer;
   border: none;
-  padding: .5em 1em;
-  background-color: #82828246;
+  padding: .5em 2em;
+  /* background-color: #82828246; */
+  border: 1px solid #47474751;
+  /* box-shadow: 0 0 1px 1px #47474751; */
+  border-radius: 20px;
+  &:hover {
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      box-shadow: none;
+  }
 }
 
 .difficulty input:checked+label {
-  background-color: rgb(35, 141, 255);
+  background-color: var(--tertiary);
   color: white;
+  border: none;
+  box-shadow: none;
 }
 
-section div:is(:not(.full_width)) p {
+/* section div:is(:not(.full_width)) p {
   line-height: 1.2em;
   width: clamp(250px, 30%, 400px);
   padding: 3%;
-  /* border: solid 2px black; */
+  border: solid 2px black; 
   border-radius: 4px;
   box-shadow: 0 0 5px 2px rgb(125, 146, 155);
   background-color: white;
-}
+}  */
 
-div h2 {
+.submit_area h2 {
   margin-bottom: 1.5em;
   font-size: 2.5rem;
   font-weight: 500;

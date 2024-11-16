@@ -1,4 +1,4 @@
-const dragarea = document.querySelector(".selection_area");
+const dragarea = document;
 const modal = document.querySelector(".modal");
 let pdf_length = [];
 dragarea.addEventListener("dragenter", (e) => {
@@ -21,8 +21,9 @@ dragarea.addEventListener("drop", (e) => {
 function pdfselected() {
     let input = document.getElementById('pdf').files[0];
     document.querySelector(".select_button").textContent = "PDF Selected";
-    document.querySelector(".select_button").style.background = "Green";
+    document.querySelector(".select_button").style.background = "var(--tertiary)";
     document.querySelector(".select_button_para").textContent = input.name;
+
     doo();
 }
 
@@ -72,13 +73,17 @@ function doo() {
         function (text) {
             document.getElementById('text').classList.remove('error');
             document.getElementById('text').value = text;
-            document.getElementById('text').removeAttribute('disabled');
+            // document.getElementById('text').removeAttribute('disabled');
+            document.querySelector(".toggle").classList.remove("disabled");
+            document.getElementById("submit_button").classList.remove("disabled");
+            document.querySelector(".select_text").children[0].style.background = "white";
         },
         function (reason) {
             document.getElementById('text').classList.add('error');
             document.getElementById('text').value = reason.toString();
             document.querySelector(".toggle").classList.add("disabled");
             document.getElementById("submit_button").classList.add("disabled");
+            document.querySelector(".select_text").children[0].style.background = "white";
         },
     );
 }
@@ -92,15 +97,19 @@ function pageindex() {
 }
 
 function textentered() {
-    document.querySelector(".toggle").classList.remove("disabled");
     document.getElementById("index_start").classList.add("disabled");
     document.getElementById("index_end").classList.add("disabled");
     document.querySelector(".index_start").classList.add("disabled");
     document.querySelector(".index_end").classList.add("disabled");
     document.getElementById("submit_button").classList.remove("disabled");
+    document.getElementById("pdf").removeAttribute("required");
     document.getElementById("index_start").removeAttribute("required");
     document.getElementById("index_end").removeAttribute("required");
-    document.getElementById("pdf").removeAttribute("required");
+    document.querySelector(".toggle").classList.remove("disabled");
+    document.querySelector(".select_text").children[0].style.background = "white";
+    document.querySelector(".select_text").children[0].classList.remove("error");
+    // console.log(document.querySelector(".select_text").children[0]);
+
 }
 document.getElementById("index_end").addEventListener("change", index_check);
 document.getElementById("index_start").addEventListener("change", index_check);
@@ -118,7 +127,7 @@ function index_check() {
     }
 }
 
-document.getElementById("submit_button").addEventListener("click", (e) => {
+document.getElementById("form").addEventListener("submit", (e) => {
     // e.preventDefault();
     if (document.getElementById("index_end").value - document.getElementById("index_start").value>10) {
         document.getElementById("index_end").value = document.getElementById("index_start").valueAsNumber+9;
@@ -127,4 +136,7 @@ document.getElementById("submit_button").addEventListener("click", (e) => {
     setInterval(() => {
         modal.showModal();
     }, 100);
+});
+document.querySelector(".select_pdf").addEventListener("click", () => {
+    document.getElementById("pdf").click();
 });

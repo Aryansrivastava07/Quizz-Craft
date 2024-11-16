@@ -1,5 +1,5 @@
 const modal = document.querySelector(".modal");
-document.getElementById("submit_button").addEventListener("click", (e) => {
+document.getElementById("form").addEventListener("submit", (e) => {
     document.querySelector(".loader").classList.add("loader_active");
     setInterval(() => {
         modal.showModal();

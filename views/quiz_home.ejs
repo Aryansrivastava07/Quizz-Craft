@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/quiz_home_style.css">
   <link rel="shortcut icon" href="/asset/img/logo2.png" type="image/x-icon">
-  <title>Quizzify | Quiz Generated</title>
+  <title>Quizz Craft | Quiz Generated</title>
 </head>
 
 <body>
@@ -42,22 +42,24 @@
     </menu>
   </nav>
   <header>
+    <img src="/asset/img/illustration.png" alt="">
     <h1>
       Ta-da!<br>
       Your personalized quiz is ready for action.
-    </h1><br>
+    </h1>
     <p>
-      <b>QuizifyPDF</b> has generated your quiz in a matter of seconds. You can now share it with your audience,
+      <b>Quizz Craft</b> has generated your quiz in a matter of seconds. You can now share it with your audience,
       students, or colleagues.
     </p>
+    <!-- <section class="button_container" tag="Scroll down to get the QR code of Quiz"> -->
+      <form action="/joinQuiz" method="post">
+          <button name="quizId" value="<%= id %>"  class="join_button highlight">
+            Join the Quiz
+          </button>
+        </form>
+      <!-- </section> -->
+      <p>Scroll down to get the QR code of Quiz</p>
   </header>
-  <section class="button_container" tag="Scroll down to get the QR code of Quiz">
-    <form action="/joinQuiz" method="post">
-        <button name="quizId" value="<%= id %>"  class="join_button">
-          <p>Join the Quiz</p>
-        </button>
-      </form>
-    </section>
     <section>
       <div class="master full_width aos">
         <h3>Scan to Open the Quiz</h3>
@@ -67,7 +69,7 @@
       </div>
     </section>
     <footer id="footer">
-      <p>© 2023 QuizifyPDF</p>
+      <p>© 2024 Quizz Craft</p>
     </footer>  
     <script defer src="https://kit.fontawesome.com/5a8048fc10.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
