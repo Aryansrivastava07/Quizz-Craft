@@ -10,12 +10,16 @@
     <link rel="stylesheet" href="/css/quiz_platform_style.css">
 
 <body>
+    <script> // Assuming `questions` is the array of questions you have 
+    const questions = (`<%= quiz %>`);
+    </script>
     <nav>
         <img src="/asset/img/logo2.png" alt="logo" class="logo" height="500" width="500">
         <div>
-            Quiz Title
+             <%= title %>
         </div>
     </nav>
+    <!-- <div id="app"></div> -->
     <div class="container" id="container">
         <div class="question_list_container">
             <div class="heading">Question List</div>
@@ -35,10 +39,6 @@
                         </a>
                     <% } %>
                 <% }) %>
-                <!-- <div data="answered">Q1</div>
-                <div data="unanswered">Q2</div>
-                <div data="active">Q3</div>
-                <div data="unanswered">Q4</div> -->
             </div>
             <div class="question_list_details">
                 <div class="answered">
@@ -82,7 +82,6 @@
                     </div>
                 </div>
                 <div class="button_container">
-                    <!-- <input type="hidden" name="quizId" value="<%= id %>" id="quizId"> -->
                     <% if(no!=10){ %>
                         <button class="button next" type="submit" id="prev_button">Next</button>
                     <% } %>
@@ -93,7 +92,7 @@
                     <sub>You wont be able to edit your response after submition</sub></p>
                     <div>
                         <label for="question_id">Your Name : </label>
-                        <input type="text" name="name" placeholder="Your Name">
+                        <input type="text" name="name" placeholder="Your Name" required>
                     </div>
                     <button type="button" id="close_modal" class="next">Cancel</button>
                     <button type="submit" id="question_submit">Submit</button>
@@ -101,7 +100,6 @@
             </form>
                 
         </div>
-        <!-- <div></div> -->
     </div>
     <script src="js/quiz_platform.js"></script>
 </body>

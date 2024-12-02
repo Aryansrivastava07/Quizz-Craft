@@ -40,12 +40,13 @@ router.get('/quiz', async (req, res) => {
         const ques = quiz.questions[req.query.no - 1];
         res.render('quiz_platform',
             {
-                question: ques.question, 
-                options: ques.options, 
-                no: parseFloat(req.query.no), 
-                id: req.query.id, 
+                quiz: quiz,
+                title: quiz.title,
+                question: ques.questions,
+                options: ques.options,
+                no: parseFloat(req.query.no),
+                id: req.query.id,
                 answer: answer,
-
             }
         );
     }else{

@@ -2,7 +2,8 @@ const OpenAI = require('openai');
 const quiz = require('../developmentAsset/quiz.js');   
 const { parse } = require('path');
 const openai = new OpenAI({
-    apiKey: process.env.OPENAIAPIKEY // This is also the default, can be omitted
+    apiKey:'AIzaSyB4fK_Xn0WWJak-QW1Y7528DTji5ZNY5nY'
+    // This is also the default, can be omitted
 });
 async function chatGPT(content,dificultyLevel ) {
     const format = {

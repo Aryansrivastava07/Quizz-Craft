@@ -33,18 +33,22 @@ section>.score_container {
 }
 
 .outer {
+    display: grid;
     position: relative;
-    padding: 20px;
+    /* padding-top: 20px; */
     height: 160px;
-    width: 160px;
+    /* aspect-ratio: 1.25/1; */
+    width: 160px !important;
+    place-items: center;
     border-radius: 50%;
     background-color: rgb(255, 255, 255);
+    /* background-color: red; */
     box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15), -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
 }
 
 .inner {
     height: 120px;
-    width: 120px;
+    width: 120px !important;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -54,15 +58,14 @@ section>.score_container {
 }
 
 circle {
-    fill: none;
-    /* stroke:url(#GradientColor); */
-    stroke:var(--score-color);
-    stroke-width: 1em;
-    stroke-dasharray: 450;
-    stroke-dashoffset: 450;
-    transform: rotate(-85deg);
-    transform-origin: center center;
-    animation: score .4s ease-in-out 1s 1 forwards ;
+     fill: none;
+     stroke:var(--score-color);
+     stroke-width: 15px;
+     stroke-dasharray: 450;
+     stroke-dashoffset: 450;
+     transform: rotate(-90deg);
+     transform-origin: center center;
+     animation: score .4s ease-in-out 1s 1 forwards ; 
 }
 @keyframes score {
     0%{
@@ -123,9 +126,11 @@ section .leaderboard div {
     text-align: center;
 }
 .review_button{
+    cursor: pointer;
     padding: 1em 2em;
     border: none;
     background-color: rgb(0, 136, 255);
     color: white;
     font-size: large;
+    border-radius:10px ;
 }
