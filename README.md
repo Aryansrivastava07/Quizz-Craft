@@ -1,7 +1,7 @@
-# Quizzify
+# Quizz Craft
 Quizzify is an advanced and AI-driven quiz platform that generates quiz from various prompts. 
 Our innovative solution seamlessly extracts questions from PDFs and make ready to use quizzes.
-<a href="https://devfolio.co/projects/quizzify-b473">Quizzify</a>
+<a href="https://devfolio.co/projects/quizzify-b473">Quizz Craft</a>
 
 ---
 
