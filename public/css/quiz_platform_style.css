@@ -38,7 +38,7 @@ a{
     margin: 1em 2em;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: grid;
-    grid-template-columns: 22% 78% ;
+    grid-template-columns: 20% 80% ;
     /* column-gap: 1%; */
     /* overflow: hidden; */
 }
@@ -71,7 +71,8 @@ a{
     display: flex;
     flex-wrap: wrap;
     height: fit-content;
-    justify-content: baseline;
+    /* justify-content: baseline; */
+    justify-content: space-between;
     gap: .5em;
     color: white;
 }
@@ -92,6 +93,7 @@ a{
     font-weight: bold;
     display: grid;
     place-items: center;
+    cursor: pointer;
 }
 .question_list_container>.question_list_details{
     width: 100%;

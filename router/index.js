@@ -1,16 +1,14 @@
 const express = require('express');    //importing express
 const mongoose = require('mongoose');   //importing mongoose
-const run = require('./gemini');   //importing openAI.js
+const run = require('./gemini');   //importing gemini.js
 const router = express.Router();    //creating router
 const { v4: uuidv4 } = require('uuid');  //importing uuid
 const url = require('url');   //importing url
 const multer = require('multer');   //importing multer
-
 const Quiz = require('../models/questions.model');  //importing the model
 const Result = require('../models/results.model');  //importing the model
 let answer = [];   //array to store score
-
-
+const quizData = require('../developmentAsset/quiz');   //importing quiz.js
 //////////////////////////////////////////////// Home Route /////////////////////////////////////////////////
 
 router.get('/', (req, res) => {
@@ -18,6 +16,7 @@ router.get('/', (req, res) => {
 });
 
 //////////////////////////////////////////////// Get Route to Create quiz from Pdf /////////////////////////////////////////////////
+
 router.get('/pdfToQuiz', (req, res) => {
     res.render('pdfToQuiz');
 });
@@ -29,6 +28,7 @@ router.get('/promptToQuiz', (req, res) => {
 });
 
 //////////////////////////////////////////////// Get Route to Quiz Home Page after creation of Quiz /////////////////////////////////////////////////
+
 router.get('/quizHome', (req, res) => {
     res.render('quiz_home', { id: req.query.id });
 });
@@ -37,31 +37,47 @@ router.get('/quizHome', (req, res) => {
 router.get('/quiz', async (req, res) => {
     if(req.query.no>0&&req.query.no<11){
         const quiz = await Quiz.findOne({ quizId: req.query.id });
+        if (!quiz) {
+            res.render('quiz_platform', {quiz: quizData});
+        }
+        else {
         const ques = quiz.questions[req.query.no - 1];
         res.render('quiz_platform',
             {
                 quiz: quiz,
                 title: quiz.title,
-                question: ques.questions,
+                question: quiz.questions,
                 options: ques.options,
                 no: parseFloat(req.query.no),
                 id: req.query.id,
                 answer: answer,
             }
         );
+    }
     }else{
-        res.json({message:"Invalid question number"}).status(404);
+        res.json({message:"Invalid question number"});
     }
 });
 
 //////////////////////////////////////////////// Get Route to Score /////////////////////////////////////////////////
 router.get('/score', async (req, res) => { 
-    const result = await Result.findOne({ resultID: req.query.r });
-    const score = result.score;
-    const results =  await Result.find({ quizId: req.query.id });
-    results.sort((a,b)=>b.score-a.score);
-    const leaderboard = results.slice(0,10);
-    res.render('result', { score: score ,leaderboard:leaderboard, id: req.query.id, r: req.query.r});
+    try {
+        const result = await Result.findOne({ resultID: req.query.r });
+        if (!result) {
+            console.error('Result not found');
+            return res.status(404).send('Result not found');
+        }
+
+        const score = result.score;
+        const results = await Result.find({ quizId: req.query.id });
+        results.sort((a, b) => b.score - a.score);
+        const leaderboard = results.slice(0, 10);
+        // console.log('Leaderboard:', leaderboard);
+        res.render('result', { score: score, leaderboard: leaderboard, id: req.query.id, r: req.query.r });
+    } catch (err) {
+        console.error('Error fetching score:', err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 //////////////////////////////////////////////// Get Route to Review Your Answer /////////////////////////////////////////////////
@@ -69,15 +85,16 @@ router.get('/score', async (req, res) => {
 router.get('/review', async (req, res) => {
     const result = await Result.findOne({ resultID: req.query.r });
     const quiz = await Quiz.findOne({ quizId: req.query.id }); 
-    const answers = result.answer;
-    res.render('review', { id: req.query.id, r: req.query.r, questions: quiz.questions, answers: answers,no:parseFloat(req.query.no)});
+    const answers = quiz.answers;
+    const explanations = quiz.explanations;
+    const userAnswers = result.answer;
+    res.render('review', {questions: quiz.questions, answers: answers,userAnswers:userAnswers,explanations:explanations });
 });
 //////////////////////////////////////////////// Post Route to create Quiz form Pdf/////////////////////////////////////////////////
 router.post('/createQuiz', async (req, res) => {
     const content = req.body.quizContent;
     const difficulty = req.body.difficulty;
     const promptType = req.body.promptType;
-    // console.log(req.body);
     const quiz = await run(content, difficulty,promptType);
     const quizId = uuidv4();
     quiz.quizId = quizId;
@@ -100,57 +117,42 @@ router.post('/createQuiz', async (req, res) => {
 
 //////////////////////////////////////////////// Post Route to Answer And Submit quiz /////////////////////////////////////////////////
 router.post('/ques', async (req, res) => {
-    // console.log(req.body.quizId);
-    const quiz = await Quiz.findOne({ quizId: req.query.id });
-    const questions = quiz.questions;
-    if (req.body.answer) {
-        answer[req.query.no - 1] = req.body.answer;
-        // const response = await Quiz.findOneAndUpdate({ quizId: req.body.quizId }, {leaderboard.find((result) => result.resultId == resultId).answer: answer });
-    }
-    if (req.query.no == 10) {
-        
+    try {
+        const quiz = await Quiz.findOne({ quizId: req.query.id });
+        if (!quiz) {
+            console.error('Quiz not found');
+            return res.status(404).send('Quiz not found');
+        }
+
         let score = 0;
-        questions.forEach((ques, index) => {
-            if (ques.answer == answer[index]) {
+        const userAnswer = req.body.arrayData;
+        const answers = quiz.answers;
+        answers.forEach((ans, index) => {
+            if (ans == userAnswer[index]) {
                 score++;
             }
         });
+
         const resultId = uuidv4();
-        // const name = req.body.name;
+        const name = req.body.name;
         const result = new Result({
             quizId: req.query.id,
             resultID: resultId,
             name: req.body.name,
             score: score,
-            answer: answer
+            answer: userAnswer
         });
-        // console.log(result);
-        try{
+
+        try {
             const response = await result.save();
-            // console.log(response);
-        }catch(err){
-            
-            console.log(err);
+            res.json({ resultId: resultId });
+        } catch (err) {
+            console.error('Error saving result:', err);
+            return res.status(500).send('Internal Server Error');
         }
-        res.redirect(url.format({
-            pathname: "/score",
-            query: {
-                "id": req.query.id,
-                "r": resultId
-            }
-        })
-        );
-    }
-    else {
-        // console.log(answer);1111111111111
-        res.redirect(url.format({
-            pathname: "/quiz",
-            query: {
-                "id": req.query.id,
-                "no": parseFloat(req.query.no) + 1,
-            }
-        })
-        );
+    } catch (err) {
+        console.error('Error processing request:', err);
+        res.status(500).send('Internal Server Error');
     }
 });
 

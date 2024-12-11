@@ -19,16 +19,16 @@ const quizSchema = new mongoose.Schema({
                 type:Array,
                 required:true
             },
-            answer:{
-                type:Number,
-                required:true
-            },
-            explanation:{
-                type:String,
-                required:true
-            }
         }
-    ]
+    ],
+    answers:{
+        type:Array,
+        required:true
+    },
+    explanations:{
+        type:Array,
+        required:true
+    }
 });
 
 const Quiz = new mongoose.model("Quiz", quizSchema);

@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="/css/review.css">
 
 <body>
+    <script>
+        const getQues =JSON.parse( `<%- JSON.stringify(questions).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026') %>`);
+        const getAns =JSON.parse( `<%- JSON.stringify(answers).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026') %>`);
+        const getUserAns =JSON.parse( `<%- JSON.stringify(userAnswers).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026') %>`);
+        const getExpl =JSON.parse( `<%- JSON.stringify(explanations).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026') %>`);
+    </script>
         <nav>
             <img src="/asset/img/logo2.png" alt="logo" class="logo" height="500" width="500">
             <menu class="navlist">
@@ -46,21 +52,7 @@
         <div class="question_list_container">
             <div class="heading">Question List</div>
             <div class="question_list">
-                <% answers.forEach((ans,index)=>{ %>
-                    <% if(ans==questions[index].answer) { %>
-                        <a href="/review?id=<%=id%>&r=<%=r%>&no=<%=index+1%>">
-                        <div data="correct" class="question_list_item"><%= index+1 %></div>
-                        </a>
-                    <% } else if(ans==4) { %>
-                        <a href="/review?id=<%=id%>&r=<%=r%>&no=<%=index+1%>">
-                            <div data="unanswered" class="question_list_item"><%= index+1 %></div>
-                        </a>
-                    <% } else{ %>
-                        <a href="/review?id=<%=id%>&r=<%=r%>&no=<%=index+1%>">
-                            <div data="wrong" class="question_list_item"><%= index+1 %></div>
-                        </a>
-                    <% } %>
-                <% }) %>
+                     
             </div>
             <div class="question_list_details">
                 <div class="answered">
@@ -78,60 +70,45 @@
             </div>
         </div>
         <div>
-            <form class="questions" method="post" action="result.html">
+            <form class="questions" method="get" action="">
                 <div class="question_container">
                     <div class="question">
-                        <div class="heading">Question <%= no  %> </div>
-                        <div class="question_text"><%= questions[no-1].question %></div>
+                        <div class="heading"></div>
+                        <div class="question_text"></div>
                     </div>
-                    <div class="option_container">      
-                        <% questions[no-1].options.forEach((option,index)=>{ %>
-                            <% if(index==questions[no-1].answer&&answers[no-1]==index){ %>
+                    <div class="option_container">  
                                 <div class="option">
-                                    <input type="radio" name="answer" id="option_<%= index+1 %>" value="<%= index %>" data-set="correct" checked>
-                                    <label for="option_<%= index+1 %>" class="option_text"> <%= option %></label>
+                                    <input type="radio" name="answer" id="" value="" data-set="" >
+                                    <label for="" class="option_text"></label>
                                 </div>
-                            <% } else if(index==questions[no-1].answer){ %>
                                 <div class="option">
-                                    <input type="radio" name="answer" id="option_<%= index+1 %>" value="<%= index %>" data-set="correct">
-                                    <label for="option_<%= index+1 %>" class="option_text"> <%= option %></label>
+                                    <input type="radio" name="answer" id="" value="" data-set="">
+                                    <label for="" class="option_text"></label>
                                 </div>
-                            <% } else if(answers[no-1]==index){ %>
                                 <div class="option">
-                                    <input type="radio" name="answer" id="option_<%= index+1 %>" value="<%= index %>" data-set="wrong" checked>
-                                    <label for="option_<%= index+1 %>" class="option_text"> <%= option %></label>
+                                    <input type="radio" name="answer" id="" value="" data-set="">
+                                    <label for="" class="option_text"></label>
                                 </div>
-                            <% } else{ %>
                                 <div class="option">
-                                    <input type="radio" name="answer" id="option_3" value="2">
-                                    <label for="option_3" class="option_text"> <%= option %></label>
-                                </div>
-                            <% } %>
-                            
-                        <% }) %>       
-                                        
+                                    <input type="radio" name="answer" id="" value="">
+                                    <label for="option_3" class="option_text"></label>
+                                </div>                                        
                     </div>
                 </div>
                 <div class="button_container">
-                    <% if(no!=10){ %>
-                        <a href="/review?id=<%=id%>&r=<%=r%>&no=<%=no+1%>">
-                            <button class="button next" type="button" id="prev_button">Next</button>
-                        </a>
-                    <% } %>
-                    <% if(no!=1){ %>
-                        <a href="/review?id=<%=id%>&r=<%=r%>&no=<%=no-1%>">
-                            <button type="button">Go Back</button>
-                        </a>
-                    <% } %>
+                    <button class="button next" type="button" id="next_btn">Next</button>
+                    <button type="button" id="prev_btn">Go Back</button>
                 </div>
                 <div class="explanation">
                     <h3>Explanation</h3>
-                    <p><%= questions[no-1].explanation %></p>
+                    <p></p>
                 </div>
             </form>
                 
         </div>
     </div>
+    <script src="js/review.js"></script>
+    </header>
 </body>
 
 </html>

@@ -10,36 +10,21 @@
     <link rel="stylesheet" href="/css/quiz_platform_style.css">
 
 <body>
-    <script> // Assuming `questions` is the array of questions you have 
-    const questions = (`<%= quiz %>`);
+    <script> // Assuming `questions` is the array of questions you have in your backend
+    const getQuiz = `<%- JSON.stringify(quiz).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026') %>`;
     </script>
     <nav>
         <img src="/asset/img/logo2.png" alt="logo" class="logo" height="500" width="500">
         <div>
-             <%= title %>
+             <%= quiz.title %>
         </div>
     </nav>
-    <!-- <div id="app"></div> -->
     <div class="container" id="container">
         <div class="question_list_container">
             <div class="heading">Question List</div>
             <div class="question_list">
-                <% answer.forEach((ans,index)=>{ %>
-                    <% if(index == no-1) { %>
-                        <a href="">
-                        <div data="active" class="question_list_item"><%= index+1 %></div>
-                        </a>
-                    <% } else if(ans==4) { %>
-                        <a href="/quiz?id=<%= id %>&no=<%= index+1 %>">
-                            <div data="unanswered" class="question_list_item"><%= index+1 %></div>
-                        </a>
-                    <% } else{ %>
-                        <a href="/quiz?id=<%= id %>&no=<%= index+1 %>">
-                            <div data="answered" class="question_list_item"><%= index+1 %></div>
-                        </a>
-                    <% } %>
-                <% }) %>
             </div>
+
             <div class="question_list_details">
                 <div class="answered">
                     <div class="answered_color details_color"></div>
@@ -56,35 +41,33 @@
             </div>
         </div>
         <div>
-            <form class="questions" method="post" action="/ques?id=<%= id %>&no=<%= no %>">
+            <form class="questions" id="quiz" method="post" action="" onsubmit="submitForm(event)">
                 <div class="question_container">
                     <div class="question">
-                        <div class="heading">Question <%= no  %> </div>
-                        <div class="question_text"><%= question %></div>
+                        <div class="heading"></div>
+                        <div class="question_text"></div>
                     </div>
                     <div class="option_container">
                         <div class="option">
                             <input type="radio" name="answer" id="option_1" value="0">
-                            <label for="option_1" class="option_text"> <%= options[0] %></label>
+                            <label for="option_1" class="option_text"></label>
                         </div>
                         <div class="option">
                             <input type="radio" name="answer" id="option_2" value="1">
-                            <label for="option_2" class="option_text"> <%= options[1] %></label>
+                            <label for="option_2" class="option_text"></label>
                         </div>
                         <div class="option">
                             <input type="radio" name="answer" id="option_3" value="2">
-                            <label for="option_3" class="option_text"> <%= options[2] %></label>
+                            <label for="option_3" class="option_text"></label>
                         </div>
                         <div class="option">
                             <input type="radio" name="answer" id="option_4" value="3">
-                            <label for="option_4" class="option_text"> <%= options[3] %></label>
+                            <label for="option_4" class="option_text"></label>
                         </div>
                     </div>
                 </div>
                 <div class="button_container">
-                    <% if(no!=10){ %>
-                        <button class="button next" type="submit" id="prev_button">Next</button>
-                    <% } %>
+                    <button class="button next" type="submit" id="next_btn">Next</button>
                     <button type="button" id="open_modal">Submit</button>
                 </div>
                 <dialog class="modal">
@@ -97,8 +80,7 @@
                     <button type="button" id="close_modal" class="next">Cancel</button>
                     <button type="submit" id="question_submit">Submit</button>
                 </dialog>
-            </form>
-                
+            </form>   
         </div>
     </div>
     <script src="js/quiz_platform.js"></script>
