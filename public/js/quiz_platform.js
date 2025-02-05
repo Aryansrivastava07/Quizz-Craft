@@ -116,7 +116,7 @@ async function submitForm(event) {
     }
 
     const result = await response.json();
-    console.log('Fetch response:', result);
+    // console.log('Fetch response:', result);
 
     // Redirect to the score page
     window.location.href = `/score?id=${quiz.quizId}&r=${result.resultId}`;
