@@ -7,7 +7,7 @@ const {
     HarmBlockThreshold,
   } = require("@google/generative-ai");
   
-  const MODEL_NAME = "gemini-pro";
+  const MODEL_NAME = "gemini-2.0-flash";
   const API_KEY = process.env.GEMINIAPIKEY;
   
   async function run(content, difficultyLevel,promptType ) {
