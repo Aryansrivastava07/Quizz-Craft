@@ -106,7 +106,7 @@ async function submitForm(event) {
   formObject.arrayData = choice;
 
   try {
-    const response = await fetch(`http://localhost:3000/ques?id=${quiz.quizId}`, {
+    const response = await fetch(`https://quizzifypdf.onrender.com/ques?id=${quiz.quizId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formObject),
@@ -116,7 +116,7 @@ async function submitForm(event) {
     }
 
     const result = await response.json();
-    console.log('Fetch response:', result);
+    // console.log('Fetch response:', result);
 
     // Redirect to the score page
     window.location.href = `/score?id=${quiz.quizId}&r=${result.resultId}`;
