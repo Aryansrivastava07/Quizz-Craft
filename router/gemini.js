@@ -163,7 +163,7 @@ Use single inverted commas to highlight any part in questions and options so it 
       const response = result.response;
       let responseText = response.text().replace(/```/g, '');
       responseText = responseText.replace(/json/g, '');
-      console.log(responseText);
+      // console.log(responseText);
       const JSONResponse = JSON.parse(responseText); 
       return(JSONResponse);
     }

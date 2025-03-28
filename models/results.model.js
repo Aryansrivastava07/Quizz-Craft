@@ -10,6 +10,10 @@ const resultSchema = new mongoose.Schema({
         required: true,
         // unique: true
     },
+    userId: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
     },
