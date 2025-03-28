@@ -17,29 +17,32 @@ router.get('/login',(req,res)=>{
 })
 
 router.post('/register', async (req, res) => {
-    const { email,username, password , fullName, phoneNumber } = req.body;
-
-    if (!email || !password || !fullName || !phoneNumber) {
+    const { email, password , fullName, phoneNumber,cpassword } = req.body;
+    
+    
+    if (!email || !password || !fullName || !phoneNumber || !cpassword) {
         return res.status(400).json({ message: 'Please enter all fields' });
     }
-    const existedUser = await User.find({$or:[{username},{email}]});
+    if(password != cpassword) res.status(400).json({message:"Password and Confirm Password does not match"});
+    const existedUser = await User.find({email});
 
-    if(existedUser.length != 0) throw new ApiError(400,"User Already Exist with same username");
+    if(existedUser.length != 0) res.status(400).json({message:"Email Is Already Registered"});
     
-    const user = await User.create({ email, username, password, fullName, phoneNumber });
+    const user = await User.create({ email, password, fullName, phoneNumber });
     if (!user) {
-        return res.status(400).json({ message: 'User already exists' });
+        return res.status(400).json({ message: 'Acoount Creation failed' });
     }
-
-    res.status(201).json({ message: 'User registered successfully' }).redirect('/login');
+    // console.log(user);
+    res.redirect('/login');
 })
 
 router.post('/login', async (req, res) => {
-    const {identifier, password } = req.body;
-    if (!identifier || !password) {
+    const {email, password } = req.body;
+    
+    if (!email || !password) {
         return res.status(400).json({ message: 'Please enter all fields' });
     }
-    const user = await User.findOne({ $or: [{ email: identifier }, { username: identifier }] });
+    const user = await User.findOne({ email });
     if (!user) {
         return res.status(400).json({ message: 'Invalid Credentials' });
     }
@@ -59,11 +62,38 @@ router.post('/login', async (req, res) => {
         secure: true,
     }
     
-    res.status(200)
-    .cookie("accessToken",accessToken,option)
-    .cookie("refreshToken",refreshToken,option)
-    .json({accessToken,refreshToken});
+    res.cookie("accessToken", accessToken, option)
+    .cookie("refreshToken", refreshToken, option)
+    .redirect('/');
 });
+
+router.post('/refreshToken', async (req, res) => {
+    const { refreshToken } = req.cookies.refreshToken;
+    if (!refreshToken) {
+        return res.status(400).json({ message: 'Invalid Request' });
+    }
+    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    if (!user) {
+        return res.status(400).json({ message: 'Invalid Request' });
+    }
+    const existedUser = await User.findById(user._id);
+    if (!existedUser) {
+        return res.status(400).json({ message: 'Invalid Request' });
+    }
+    if (existedUser.refreshToken !== refreshToken) {
+        return res.status(400).json({ message: 'Invalid Request' });
+    }
+    const accessToken = existedUser.generateAcessToken();
+    if (!accessToken) {
+        return res.status(400).json({ message: 'Invalid Request' });
+    }
+    res.cookie("accessToken", accessToken, {
+        maxAge: 1000 * 60 * 15,
+        httpOnly: true,
+        secure: true,
+    });
+    res.status(200).json({ message: "Token Refreshed" });
+})
 
 router.post('/logout', authenticateUser, async (req, res) => {
     const user = req.user;
@@ -72,6 +102,10 @@ router.post('/logout', authenticateUser, async (req, res) => {
         .clearCookie("accessToken")
         .clearCookie("refreshToken")
         .json({message: "User logged Out"});
+});
+
+router.post('/checkLogin', authenticateUser, async (req, res) => {
+    res.status(200).json({ message: "User is logged in" });
 });
 
 module.exports = router;

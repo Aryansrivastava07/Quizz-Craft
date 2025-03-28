@@ -8,10 +8,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    username : {
-        type: String,
-        required: true
-    },
     password : {
         type: String,
         required: true
@@ -43,7 +39,6 @@ userSchema.methods.generateAcessToken = function(){
     const accessToken = jwt.sign(
         {
             _id:this._id,
-            username: this.username,
             email: this.email,
             fullName: this.fullName
         },
