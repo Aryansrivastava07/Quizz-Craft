@@ -156,7 +156,7 @@ nav * {
   }
 }
 
-nav img {
+nav > img {
   height: 100%;
   width: 10%;
   object-fit: contain;
@@ -165,6 +165,8 @@ nav img {
 .navlist {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   padding-right: 40px;
 }
 
@@ -285,6 +287,86 @@ header>div:has(.highlight:hover) .dropdown_content{
   color: white;
   background-color: rgb(40, 40, 40);
 }
+
+.navlist .nav_login a{
+  background-color: var(--highlight);
+  color: #fff;
+  &:hover{
+    background-color: var(--highlight-hover);
+  }
+}
+
+.navlist .nav_login a:hover{
+  color: #000;
+}
+
+.nav_login img{
+  height: 100%;
+  width: 30px;
+  object-fit: contain;
+}
+
+.dropdown_profile{
+  scale: 1 0;
+  width: max-content;
+  transition: 0.2s 0.2s;
+  visibility: hidden;
+  transform: translateY(-100%) translateX(-75%);
+  position: absolute;
+  top: 100%;
+  padding: 0em 0em;
+  left: calc( 100% - 40px);
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  margin-top: 8px;
+}
+.navlist:has(.dropdown_profile_show) .nav_login{
+  transition: all 0.5s 0.1s;
+  filter: invert(1);
+}
+.dropdown_profile_show{
+  transform: translateY(0%) translateX(-75%);
+  visibility: visible;
+  scale: 1 1;
+  z-index: 10;
+}
+
+.dropdown_profile div a {
+  padding: 0.5em 2em;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 5% auto;
+  gap: 1em;
+  grid-auto-rows: 2em;
+  align-items: center;
+  justify-content: start;
+  color: black;
+  border-radius: 8px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  gap: 8px;
+}
+
+.dropdown_profile div a:hover {
+  color: white;
+  background-color: rgb(159, 170, 207);
+  &i {
+    filter: invert(1);
+  }
+}
+
+.dropdown_profile div a {
+  text-decoration: none;
+  color: black;
+  &:is(.under_process){
+    color: #484848;
+    position: relative;
+  }
+}
+
+
 
 section {
   width: 100%;

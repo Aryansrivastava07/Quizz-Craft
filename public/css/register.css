@@ -35,6 +35,41 @@
     height: 100%;
     font-family: Poppins-Regular, sans-serif;
   }
+
+
+  
+nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  height: clamp(50px, 8vh, 80px);
+  height: 8vh;
+  z-index: 10;
+}
+
+nav * {
+  opacity: 0;
+  animation: navitems_animation 0.5s 0.2s ease-in 1 forwards;
+}
+
+@keyframes navitems_animation {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+nav img {
+  height: 100%;
+  width: 10%;
+  object-fit: contain;
+}
   
   /*---------------------------------------------*/
   a {
@@ -59,6 +94,18 @@
   }
   
   /*---------------------------------------------*/
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Firefox */
+  input[type=number] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
   h1,
   h2,
   h3,
@@ -191,7 +238,7 @@
   
   .container-register {
     width: 100%;
-    min-height: 100vh;
+    min-height: 92vh;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -206,6 +253,16 @@
     background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
     background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
     background: linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -webkit-linear-gradient(
+    to right,
+    #e2e2e2,
+    #c9d6ff
+  );
+  background: linear-gradient(
+    to right,
+    #e2e2e2,
+    #c9d6ff
+  );
   }
   
   .wrap-register {
@@ -391,9 +448,9 @@
   [ Responsive ]*/
   
   @media (max-width: 992px) {
-    .wrap-register {
-      /* padding: 177px 90px 33px 85px; */
-    }
+    /* .wrap-register {
+     
+    } */
   
     .register-pic {
       width: 35%;

@@ -29,3 +29,20 @@ const aos = document.querySelectorAll(".aos");
 aos.forEach((element) => {
     observer.observe(element);
 });
+window.onload = () => {
+    if(userloggedin()){
+        console.log("User Logged In");
+        let loggedin = document.getElementById("profile");
+        loggedin.innerHTML = `<a href="/login">Login</a>`;
+    }
+};
+function userloggedin(){
+    const chk = await(fetch("/checklogin",{
+        method:"GET"
+    }))
+    // console.log(chk);
+    return false;
+}
+function profile(){
+    document.querySelector(".dropdown_profile").classList.toggle("dropdown_profile_show");
+}
