@@ -104,9 +104,9 @@ async function submitForm(event) {
   const formObject = {}; 
   formData.forEach((value, key) => { formObject[key] = value; });
   formObject.arrayData = choice;
-
+  const urlParams = window.location.origin;
   try {
-    const response = await fetch(`https://quizzifypdf.onrender.com/ques?id=${quiz.quizId}`, {
+    const response = await fetch(`${urlParams}/ques?id=${quiz.quizId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formObject),
