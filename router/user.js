@@ -105,6 +105,11 @@ router.post('/logout', authenticateUser, async (req, res) => {
 });
 
 router.get('/checkLogin', authenticateUser, async (req, res) => {
+    const accessToken = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
+    if (!accessToken) return res.status(200).json({ message: "User is not logged in" });
+    const decode = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+    const user = await User.findById(decode._id);
+    if (!user) return res.status(200).json({ message: "User is not logged in" });
     res.status(200).json({ message: "User is logged in" });
 });
 
