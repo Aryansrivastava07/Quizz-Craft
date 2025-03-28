@@ -6,7 +6,9 @@ const { v4: uuidv4 } = require('uuid');  //importing uuid
 const url = require('url');   //importing url
 const multer = require('multer');   //importing multer
 const Quiz = require('../models/questions.model');  //importing the model
-const Result = require('../models/results.model');  //importing the model
+const Result = require('../models/results.model');
+const {authenticateUser} = require('../middlewares/authentication.middleware');
+  //importing the model
 let answer = [];   //array to store score
 const quizData = require('../developmentAsset/quiz');   //importing quiz.js
 //////////////////////////////////////////////// Home Route /////////////////////////////////////////////////
@@ -15,24 +17,24 @@ const quizData = require('../developmentAsset/quiz');   //importing quiz.js
 
 //////////////////////////////////////////////// Get Route to Create quiz from Pdf /////////////////////////////////////////////////
 
-router.get('/pdfToQuiz', (req, res) => {
+router.get('/pdfToQuiz',authenticateUser, (req, res) => {
     res.render('pdfToQuiz');
 });
 
 //////////////////////////////////////////////// Get Route to Create quiz from Prompt /////////////////////////////////////////////////
 
-router.get('/promptToQuiz', (req, res) => {
+router.get('/promptToQuiz',authenticateUser, (req, res) => {
     res.render('promptToQuiz');
 });
 
 //////////////////////////////////////////////// Get Route to Quiz Home Page after creation of Quiz /////////////////////////////////////////////////
 
-router.get('/quizHome', (req, res) => {
+router.get('/quizHome',authenticateUser, (req, res) => {
     res.render('quiz_home', { id: req.query.id });
 });
 
 //////////////////////////////////////////////// Get Route to Quiz Platform /////////////////////////////////////////////////
-router.get('/quiz', async (req, res) => {
+router.get('/quiz',authenticateUser, async (req, res) => {
     if(req.query.no>0&&req.query.no<11){
         const quiz = await Quiz.findOne({ quizId: req.query.id });
         if (!quiz) {
@@ -58,7 +60,7 @@ router.get('/quiz', async (req, res) => {
 });
 
 //////////////////////////////////////////////// Get Route to Score /////////////////////////////////////////////////
-router.get('/score', async (req, res) => { 
+router.get('/score',authenticateUser, async (req, res) => { 
     try {
         const result = await Result.findOne({ resultID: req.query.r });
         if (!result) {
@@ -80,7 +82,7 @@ router.get('/score', async (req, res) => {
 
 //////////////////////////////////////////////// Get Route to Review Your Answer /////////////////////////////////////////////////
 
-router.get('/review', async (req, res) => {
+router.get('/review',authenticateUser, async (req, res) => {
     const result = await Result.findOne({ resultID: req.query.r });
     const quiz = await Quiz.findOne({ quizId: req.query.id }); 
     const answers = quiz.answers;
@@ -89,7 +91,7 @@ router.get('/review', async (req, res) => {
     res.render('review', {questions: quiz.questions, answers: answers,userAnswers:userAnswers,explanations:explanations });
 });
 //////////////////////////////////////////////// Post Route to create Quiz form Pdf/////////////////////////////////////////////////
-router.post('/createQuiz', async (req, res) => {
+router.post('/createQuiz',authenticateUser, async (req, res) => {
     const content = req.body.quizContent;
     const difficulty = req.body.difficulty;
     const promptType = req.body.promptType;
@@ -114,7 +116,7 @@ router.post('/createQuiz', async (req, res) => {
 
 
 //////////////////////////////////////////////// Post Route to Answer And Submit quiz /////////////////////////////////////////////////
-router.post('/ques', async (req, res) => {
+router.post('/ques',authenticateUser, async (req, res) => {
     try {
         const quiz = await Quiz.findOne({ quizId: req.query.id });
         if (!quiz) {
@@ -157,7 +159,7 @@ router.post('/ques', async (req, res) => {
 
 //////////////////////////////////////////////// Post Route to Join quiz /////////////////////////////////////////////////
 
-router.post('/joinQuiz',async(req,res)=>{
+router.post('/joinQuiz',authenticateUser,async(req,res)=>{
     const quizId = req.body.quizId;
     answer = [4,4,4,4,4,4,4,4,4,4];
     res.redirect(url.format({
