@@ -6,6 +6,15 @@ const express = require('express');
 
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    res.render('index');
+});
+router.get('/register',(req,res)=>{
+    res.render('register');
+})
+router.get('/login',(req,res)=>{
+    res.render('login');
+})
 
 router.post('/register', async (req, res) => {
     const { email,username, password , fullName, phoneNumber } = req.body;
@@ -22,7 +31,7 @@ router.post('/register', async (req, res) => {
         return res.status(400).json({ message: 'User already exists' });
     }
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'User registered successfully' }).redirect('/login');
 })
 
 router.post('/login', async (req, res) => {
