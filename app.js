@@ -4,11 +4,18 @@ const ejs = require('ejs');
 const cookieParser = require('cookie-parser');
 const express = require('express'); 
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 
 // const app = express();
 dotenv.config();
-// app.use(express.urlencoded());
+
+// const corsOptions = {
+//     origin: '*',
+//     credentials: true,
+// };
+app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());

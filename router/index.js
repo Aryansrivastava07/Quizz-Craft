@@ -69,9 +69,9 @@ router.get('/score',authenticateUser, async (req, res) => {
         }
 
         const score = result.score;
-        const results = await Result.find({ quizId: req.query.id });
-        results.sort((a, b) => b.score - a.score);
-        const leaderboard = results.slice(0, 10);
+        const leaderboard = await Result.find({ quizId: req.query.id }).sort({ score: -1 }).limit(10);
+        // results.sort((a, b) => b.score - a.score);
+        // const leaderboard = results.slice(0, 10);
         // console.log('Leaderboard:', leaderboard);
         res.render('result', { score: score, leaderboard: leaderboard, id: req.query.id, r: req.query.r });
     } catch (err) {
@@ -98,6 +98,7 @@ router.post('/createQuiz',authenticateUser, async (req, res) => {
     const quiz = await run(content, difficulty,promptType);
     const quizId = uuidv4();
     quiz.quizId = quizId;
+    quiz.createrId = req.user._id;
     const newQuiz = new Quiz(quiz);
     try {
         await newQuiz.save();
@@ -137,6 +138,7 @@ router.post('/ques',authenticateUser, async (req, res) => {
         const name = req.body.name;
         const result = new Result({
             quizId: req.query.id,
+            userId: req.user._id,
             resultID: resultId,
             name: req.body.name,
             score: score,
