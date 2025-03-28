@@ -26,7 +26,7 @@ app.use(indexRouter);
 app.use(userRouter);
 
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 5000, () => {
     console.log(`Example app listening on port ${process.env.PORT} !`);
 });
 

@@ -104,7 +104,7 @@ router.post('/logout', authenticateUser, async (req, res) => {
         .json({message: "User logged Out"});
 });
 
-router.post('/checkLogin', authenticateUser, async (req, res) => {
+router.get('/checkLogin', authenticateUser, async (req, res) => {
     res.status(200).json({ message: "User is logged in" });
 });
 
