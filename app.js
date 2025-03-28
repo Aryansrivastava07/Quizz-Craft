@@ -1,7 +1,7 @@
 // const express = require('express');
 const dotenv = require('dotenv');
 const ejs = require('ejs');
-
+const cookieParser = require('cookie-parser');
 const express = require('express'); 
 const bodyParser = require('body-parser');
 const app = express();
@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static('public'));
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 
 //calling database from db
@@ -20,8 +21,9 @@ require("./db/conn");
 
 //calling router
 const indexRouter = require('./router/index');
+const userRouter = require('./router/user');
 app.use(indexRouter);
-
+app.use(userRouter);
 
 
 app.listen(process.env.PORT || 3000, () => {

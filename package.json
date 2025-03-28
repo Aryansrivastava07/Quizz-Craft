@@ -11,12 +11,16 @@
   "license": "MIT",
   "dependencies": {
     "@google/generative-ai": "^0.1.1",
+    "bcryptjs": "^3.0.2",
     "convertapi": "^1.13.0",
     "convertapi-js": "^1.0.8",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.2",
+    "mongoose-aggregate-paginate-v2": "^1.1.4",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.7",
     "uuid": "^9.0.1"
