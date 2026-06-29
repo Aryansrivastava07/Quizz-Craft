@@ -104,7 +104,7 @@ const refreshAccessToken = async () => {
 // User API functions
 export const userAPI = {
   register: async (userData) => {
-    const response = await apiRequest('/user/register', {
+    const response = await apiRequest('/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
