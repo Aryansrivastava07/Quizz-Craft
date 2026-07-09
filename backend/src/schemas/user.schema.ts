@@ -36,7 +36,7 @@ export class User {
   averageScore!: number;
 
   @Prop({ default: null })
-  verificationId!: number;
+  verificationId!: string;
 
   @Prop({ default: null })
   verificationIdExpiry!: Date;

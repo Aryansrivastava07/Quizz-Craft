@@ -80,4 +80,10 @@ export class AuthController {
       data: res
     };
   }
+
+  @HttpCode(200)
+  @Post('verify-otp')
+  verifyOTP(@Body('email') email: string, @Body('OTP') OTP: string) {
+    return this.authService.verifyOTP(email, OTP);
+  }
 }
