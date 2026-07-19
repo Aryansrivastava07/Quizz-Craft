@@ -1,5 +1,5 @@
 import { User } from "../../schemas/user.schema";
-import { LoginAuthResponseDto, RegisterAuthResponseDto, MeAuthResponseDto } from "../dto/auth-response.dto";
+import { LoginAuthResponseDto, RegisterAuthResponseDto, MeAuthResponseDto } from "../dto/auth.response.dto";
 
 export const toLoginDto = (user: User): LoginAuthResponseDto => ({
     username: user.username,

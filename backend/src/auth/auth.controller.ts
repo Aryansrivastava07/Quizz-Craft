@@ -1,10 +1,11 @@
 import { Controller, Post, Body, UseInterceptors, Res, Req, UseGuards, HttpCode, UnauthorizedException, Get, } from '@nestjs/common';
 import type { Response } from 'express';
 import { AuthService } from './auth.service';
-import { RegisterAuthDto, LoginAuthDto, LogoutAuthDto } from './dto/auth-request.dto';
+import { RegisterAuthDto, LoginAuthDto, LogoutAuthDto, VerifyOTPAuthDto, SendPasswordResetMailAuthDto, ResetPasswordAuthDto, ResendOTP } from './dto/auth.request.dto';
 import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
 import { SanitizeInterceptor } from '../common/interceptors/sanitize.interceptor';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { ResetPassGuard } from '../common/guards/reset-pass.guard';
 
 @Controller('auth')
 @UseInterceptors(LoggingInterceptor, SanitizeInterceptor)
@@ -20,10 +21,18 @@ export class AuthController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @Get('me')
+  Me(@Req() req) {
+    const userId = req.user.userId;
+    return this.authService.me({ userId });
+  }
+
   @HttpCode(201)
   @Post('register')
-  register(@Body() registerAuthDto: RegisterAuthDto) {
-    return this.authService.register(registerAuthDto);
+  register(@Body() dto: RegisterAuthDto) {
+    return this.authService.register(dto);
   }
 
   @HttpCode(200)
@@ -57,13 +66,6 @@ export class AuthController {
     return res;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @HttpCode(200)
-  @Get('me')
-  Me(@Req() req) {
-    const userId = req.user.userId;
-    return this.authService.me({ userId });
-  }
 
   @HttpCode(200)
   @Post('refresh')
@@ -82,8 +84,51 @@ export class AuthController {
   }
 
   @HttpCode(200)
-  @Post('verify-otp')
-  verifyOTP(@Body('email') email: string, @Body('OTP') OTP: string) {
-    return this.authService.verifyOTP(email, OTP);
+  @Post('resend-register-otp')
+  async ResendRegisterOTP(@Body() dto: ResendOTP){
+    return this.authService.ResendRegisterOTP(dto);
+  }
+
+  @HttpCode(200)
+  @Post('verify-register-otp')
+  async verifyRegsitrationOTP(@Body() dto: VerifyOTPAuthDto, @Res({ passthrough: true }) response: Response) {
+    const result = await this.authService.verifyRegistrationOTP(dto);
+    const { accessToken, refreshToken, ...res } = result.data;
+
+    response.cookie('accessToken', accessToken, this.getCookieOptions(1000 * 60 * 10));
+    response.cookie('refreshToken', refreshToken, this.getCookieOptions(1000 * 60 * 60 * 24 * 10));
+
+    return {
+      message: result.message,
+      data: res
+    }
+  }
+
+  @HttpCode(200)
+  @Post('send-password-reset-mail')
+  sendPasswordResetMail(@Body() dto: SendPasswordResetMailAuthDto) {
+    return this.authService.sendPasswordResetMail(dto);
+  }
+
+  @HttpCode(200)
+  @Post('verify-password-reset-otp')
+  async verifyPasswordResetOTP(@Body() dto: VerifyOTPAuthDto, @Res({ passthrough: true }) response: Response) {
+    const result = await this.authService.verifyPasswordResetOTP(dto);
+    const { RESET_PASS_TOKEN, ...res } = result.data;
+
+    response.cookie('RESET_PASS_TOKEN', RESET_PASS_TOKEN, this.getCookieOptions(1000 * 60 * 10));
+
+    return {
+      message: result.message,
+      data: res
+    }
+  }
+
+  @UseGuards(ResetPassGuard)
+  @HttpCode(200)
+  @Post('reset-password')
+  ResetPassword(@Body() dto: ResetPasswordAuthDto, @Res({ passthrough: true }) response: Response) {
+    response.clearCookie('RESET_PASS_TOKEN');
+    return this.authService.ResetPassword(dto);
   }
 }

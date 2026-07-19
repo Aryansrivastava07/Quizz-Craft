@@ -1,4 +1,4 @@
-import { RegisterAuthResponseDto, LoginAuthResponseDto, MeAuthResponseDto } from "../dto/auth-response.dto";
+import { RegisterAuthResponseDto, LoginAuthResponseDto, MeAuthResponseDto } from "../dto/auth.response.dto";
 export interface LoginResponseData {
     user: LoginAuthResponseDto;
     accessToken: string;

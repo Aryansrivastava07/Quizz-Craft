@@ -8,7 +8,7 @@ export class User {
   // @Prop()
   // _id?: string;
 
-  @Prop()
+  @Prop({ unique: true, required: true })
   username!: string;
 
   @Prop({ unique: true, required: true })
@@ -24,7 +24,7 @@ export class User {
   profilePicture!: string;
 
   @Prop({ default: null })
-  mobileNo!: number;
+  mobileNo!: Number;
 
   @Prop({ default: '' })
   address!: string;

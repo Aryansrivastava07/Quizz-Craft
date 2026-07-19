@@ -1,36 +1,56 @@
 import {
-  ExceptionFilter,
-  Catch,
   ArgumentsHost,
+  Catch,
+  ExceptionFilter,
   HttpException,
+  HttpStatus,
+  Logger,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+  private readonly logger = new Logger(HttpExceptionFilter.name);
+
+  catch(exception: HttpException, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
 
-    const response = ctx.getResponse();
-    const request = ctx.getRequest();
+    const request = ctx.getRequest<Request>();
+    const response = ctx.getResponse<Response>();
 
-    const status = exception.getStatus();
+    const status =
+      exception.getStatus?.() ?? HttpStatus.INTERNAL_SERVER_ERROR;
+
     const exceptionResponse = exception.getResponse();
 
-    const payload =
-      typeof exceptionResponse === 'object' && exceptionResponse !== null
-        ? {
-            ...exceptionResponse,
-            statusCode: status,
-            path: request.url,
-            timestamp: new Date().toISOString(),
-          }
-        : {
-            statusCode: status,
-            path: request.url,
-            message: exception.message,
-            timestamp: new Date().toISOString(),
-          };
+    let message: string | string[] = 'Something went wrong';
+    let error: string | undefined;
 
-    response.status(status).json(payload);
+    if (typeof exceptionResponse === 'string') {
+      message = exceptionResponse;
+    } else if (
+      typeof exceptionResponse === 'object' &&
+      exceptionResponse !== null
+    ) {
+      const res = exceptionResponse as Record<string, any>;
+
+      message =
+        res.message ??
+        res.errmsg ??
+        exception.message ??
+        'Something went wrong';
+
+      error = res.error;
+    }
+
+    response.status(status).json({
+      success: false,
+      statusCode: status,
+      message,
+      error,
+      timestamp: new Date().toISOString(),
+      path: request.originalUrl,
+      method: request.method,
+    });
   }
 }
