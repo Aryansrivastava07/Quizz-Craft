@@ -12,10 +12,10 @@ export class ProfileService {
     ) { }
     async getProfile(dto: getProfileDto): Promise<ServiceResponse<getProfileResponseData>> {
         const { email } = dto;
-        const user = this.UserModel.findOne({ email: email });
+        const user = await this.UserModel.findOne({ email: email }) || {};
         return {
-            message: '',
-            data: ''
+            message: 'User retrieved successfully',
+            data: user
         }
     }
 }
