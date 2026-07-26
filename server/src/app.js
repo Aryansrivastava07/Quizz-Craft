@@ -3,12 +3,9 @@ import cors from "cors";
 import express from "express";
 const app = express();
 
-const allowedOrigins = [
-  "https://quizz-craft.netlify.app",
-  // It's a good practice to also allow your local development environment
-  "http://localhost:5173", // Default for Vite
-  "http://localhost:3000", // Default for Create React App
-];
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : [];
 
 // This regex will match Netlify deploy previews like `https://deploy-preview-123--quizz-craft.netlify.app`
 const netlifyPreviewRegex =

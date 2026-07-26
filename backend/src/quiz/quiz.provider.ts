@@ -2,7 +2,7 @@ import { Connection } from 'mongoose';
 import { UserSchema } from '../schemas/user.schema';
 import { QuizSchema } from '../schemas/quiz.schema';
 
-export const ProfileProviders = [
+export const QuizProviders = [
   {
     provide: 'USER_MODEL',
     useFactory: (connection: Connection) =>
