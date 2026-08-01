@@ -1,12 +1,13 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
   : [];
-
 // This regex will match Netlify deploy previews like `https://deploy-preview-123--quizz-craft.netlify.app`
 const netlifyPreviewRegex =
   /^https:\/\/([a-z0-9-]+)--quizz-craft\.netlify\.app$/;
