@@ -5,12 +5,15 @@ import { User } from '../schemas/user.schema';
 import { generateQuizDto } from './dto/quiz.request.dto';
 import { ServiceResponse } from '../common/interfaces/service-response.interface';
 import { generateQuizResponseData } from './dto/quiz.response.dto';
+import { AI_PROVIDER } from '../ai/ai.constants';
+import type { AiProvider } from '../ai/interfaces/ai-provider.interface';
 
 @Injectable()
 export class QuizService {
   constructor(
     @Inject('USER_MODEL') private UserModel: Model<User>,
     @Inject('QUIZ_MODEL') private QuizModel: Model<Quiz>,
+    @Inject(AI_PROVIDER)  private ai: AiProvider
   ) {}
   async generateQuiz(
     dto: generateQuizDto,

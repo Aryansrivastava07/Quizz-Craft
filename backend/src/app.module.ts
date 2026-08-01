@@ -7,6 +7,7 @@ import { MailModule } from './mail/mail.module';
 import { ProfileModule } from './profile/profile.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { QuizModule } from './quiz/quiz.module';
+import { AiModule } from './ai/ai.module';
 import KeyvRedis from '@keyv/redis';
 
 @Module({
@@ -18,7 +19,7 @@ import KeyvRedis from '@keyv/redis';
       stores: [
         new KeyvRedis('redis://localhost:6379'),
       ],
-    }), QuizModule,],
+    }), QuizModule, AiModule,],
   })
 
 export class AppModule implements NestModule {
