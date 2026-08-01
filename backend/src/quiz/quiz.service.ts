@@ -13,14 +13,21 @@ export class QuizService {
   constructor(
     @Inject('USER_MODEL') private UserModel: Model<User>,
     @Inject('QUIZ_MODEL') private QuizModel: Model<Quiz>,
-    @Inject(AI_PROVIDER)  private ai: AiProvider
+    @Inject(AI_PROVIDER) private ai: AiProvider,
   ) {}
   async generateQuiz(
     dto: generateQuizDto,
   ): Promise<ServiceResponse<generateQuizResponseData>> {
+    try {
+      const generatedQuiz = await this.ai.generateQuiz(dto);
+    } catch (error: any) {
+      throw new Error(`Failed to generate quiz: ${error}`);
+    }
     return {
       message: 'Quiz generated successfully',
-      data: {},
+      data: {
+        status: true,
+      },
     };
   }
 }

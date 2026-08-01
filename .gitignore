@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 server/.env
 .env
+backend/.env
+backend/pnpm-lock.yaml
+/pnpm-lock.yaml

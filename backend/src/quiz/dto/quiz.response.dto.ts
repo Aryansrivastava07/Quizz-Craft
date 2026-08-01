@@ -1,1 +1,3 @@
-export class generateQuizResponseData {}
+export class generateQuizResponseData {
+  status!: boolean;
+}

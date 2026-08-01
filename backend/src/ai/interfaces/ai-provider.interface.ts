@@ -1,3 +1,5 @@
+import { generateQuizDto } from '../../quiz/dto/quiz.request.dto';
+
 export interface AiProvider {
-  generateText(prompt: string): Promise<string>;
+  generateQuiz(dto: generateQuizDto): Promise<string>;
 }
