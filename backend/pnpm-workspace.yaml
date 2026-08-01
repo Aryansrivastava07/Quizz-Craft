@@ -1,6 +1,8 @@
 allowBuilds:
+  '@google/genai': true
   '@scarf/scarf': true
   bcrypt: true
   core-js: true
   nodemon: true
+  protobufjs: true
   unrs-resolver: true
