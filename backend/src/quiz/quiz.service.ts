@@ -8,6 +8,7 @@ import { generateQuizResponseData } from './dto/quiz.response.dto';
 import { AI_PROVIDER } from '../ai/ai.constants';
 import type { AiProvider } from '../ai/interfaces/ai-provider.interface';
 
+
 @Injectable()
 export class QuizService {
   constructor(
@@ -15,11 +16,15 @@ export class QuizService {
     @Inject('QUIZ_MODEL') private QuizModel: Model<Quiz>,
     @Inject(AI_PROVIDER) private ai: AiProvider,
   ) {}
+
+
   async generateQuiz(
     dto: generateQuizDto,
   ): Promise<ServiceResponse<generateQuizResponseData>> {
     try {
+      // console.log(dto)
       const generatedQuiz = await this.ai.generateQuiz(dto);
+      console.log('Generated Quiz:', generatedQuiz);
     } catch (error: any) {
       throw new Error(`Failed to generate quiz: ${error}`);
     }
