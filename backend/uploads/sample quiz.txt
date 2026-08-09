@@ -1,0 +1,117 @@
+Generated Quiz: {
+  "quiz": {
+    "title": "Substitute Form W-8BEN Details and Guidelines Quiz",
+    "questions": [
+      {
+        "question": "Which form must entities use for Foreign Status certification instead of Form W-8BEN?",
+        "options": [
+          "Form W-8BEN-E",
+          "Form W-9",
+          "Form 1040-NR",
+          "Form W-8ECI"
+        ],
+        "answer": 0,
+        "explanation": "The top instructions of Form W-8BEN state that entities must use Form W-8BEN-E."
+      },
+      {
+        "question": "Who is listed as the beneficial owner on this Substitute Form W-8BEN?",
+        "options": [
+          "Greater Noida",
+          "Aryan Srivastava",
+          "Uttar Pradesh",
+          "Internal Revenue Service"
+        ],
+        "answer": 1,
+        "explanation": "Part I Line 1 lists Aryan Srivastava as the individual who is the beneficial owner."
+      },
+      {
+        "question": "To whom should Form W-8BEN be given once completed?",
+        "options": [
+          "Directly to the Internal Revenue Service (IRS)",
+          "To the local foreign tax office",
+          "To the withholding agent or payer",
+          "To the U.S. Department of State"
+        ],
+        "answer": 2,
+        "explanation": "The instructions explicitly state to 'Give this form to the withholding agent or payer. Do not send to the IRS.'"
+      },
+      {
+        "question": "What is the country of citizenship specified for the beneficial owner in Part I?",
+        "options": [
+          "United States",
+          "India",
+          "United Kingdom",
+          "Canada"
+        ],
+        "answer": 1,
+        "explanation": "Line 2 lists 'India' as the country of citizenship."
+      },
+      {
+        "question": "Within how many days must a new form be submitted if any certification made on Form W-8BEN becomes incorrect?",
+        "options": [
+          "10 days",
+          "15 days",
+          "30 days",
+          "60 days"
+        ],
+        "answer": 2,
+        "explanation": "Part III Certification states: 'I agree that I will submit a new form within 30 days if any certification made on this form becomes incorrect.'"
+      },
+      {
+        "question": "What checkbox is marked in Line 6b regarding the Foreign Tax Identifying Number (FTIN)?",
+        "options": [
+          "FTIN provided in Line 5",
+          "FTIN not legally required",
+          "FTIN pending approval",
+          "FTIN exempt under treaty"
+        ],
+        "answer": 1,
+        "explanation": "Line 6b is checked, indicating that an FTIN is not legally required."
+      },
+      {
+        "question": "What is the date of birth listed for the beneficial owner in Part I Line 8?",
+        "options": [
+          "08-17-2004",
+          "08-07-2026",
+          "01-01-2000",
+          "12-31-1998"
+        ],
+        "answer": 0,
+        "explanation": "Line 8 specifies the date of birth as 08-17-2004."
+      },
+      {
+        "question": "What type of address is explicitly prohibited from being used as a permanent residence address in Line 3?",
+        "options": [
+          "An apartment or suite number",
+          "A rural route address",
+          "A P.O. box or in-care-of address",
+          "An international address"
+        ],
+        "answer": 2,
+        "explanation": "Line 3 explicitly states: 'Do not use a P.O. box or in-care-of address.'"
+      },
+      {
+        "question": "Which of the following is explicitly certified in Part III of the form?",
+        "options": [
+          "The person named above is a U.S. citizen",
+          "The person named above is not a U.S. person",
+          "The person named above is a U.S. resident alien",
+          "The person named above is a corporate entity"
+        ],
+        "answer": 1,
+        "explanation": "Part III certifications explicitly include the bullet point: 'The person named above is not a U.S. person.'"
+      },
+      {
+        "question": "What is the date of signature listed on this form?",
+        "options": [
+          "08-17-2004",
+          "08-07-2026",
+          "01-01-2025",
+          "05-12-2023"
+        ],
+        "answer": 1,
+        "explanation": "The signature section lists the date (MM-DD-YYYY) as 08-07-2026."
+      }
+    ]
+  }
+}

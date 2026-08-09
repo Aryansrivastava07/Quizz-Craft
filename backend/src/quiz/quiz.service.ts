@@ -7,7 +7,8 @@ import { ServiceResponse } from '../common/interfaces/service-response.interface
 import { generateQuizResponseData } from './dto/quiz.response.dto';
 import { AI_PROVIDER } from '../ai/ai.constants';
 import type { AiProvider } from '../ai/interfaces/ai-provider.interface';
-
+import { IAiGeneratedQuizResponse } from '../common/interfaces/quiz.interface'; // Renamed interface
+import { IQuiz } from '../common/interfaces/quiz-types.interface'; // New core interface
 
 @Injectable()
 export class QuizService {
@@ -17,22 +18,32 @@ export class QuizService {
     @Inject(AI_PROVIDER) private ai: AiProvider,
   ) {}
 
-
   async generateQuiz(
     dto: generateQuizDto,
-  ): Promise<ServiceResponse<generateQuizResponseData>> {
+  ): Promise<ServiceResponse<generateQuizResponseData>> { // Return type remains the same
     try {
       // console.log(dto)
-      const generatedQuiz = await this.ai.generateQuiz(dto);
+      const generatedQuiz: IAiGeneratedQuizResponse = await this.ai.generateQuiz(dto); // Use new AI response interface
+      try {
+        const newQuiz: IQuiz = { // Explicitly type newQuiz as IQuiz
+          quizId: crypto.randomUUID(),
+          title: generatedQuiz?.quiz.title,
+          questions: generatedQuiz?.quiz.questions,
+        };
+        const createdQuiz = await this.QuizModel.create(newQuiz);
+        return {
+          message: 'Quiz generated successfully',
+          data: {
+            quiz: createdQuiz as Quiz & IQuiz,
+          },
+        };
+      } catch (error) {
+        console.error('Error while creating new quiz object:', error);
+        throw new Error('Failed to create new quiz object');
+      }
       console.log('Generated Quiz:', generatedQuiz);
     } catch (error: any) {
       throw new Error(`Failed to generate quiz: ${error}`);
     }
-    return {
-      message: 'Quiz generated successfully',
-      data: {
-        status: true,
-      },
-    };
   }
 }

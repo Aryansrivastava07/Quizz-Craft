@@ -12,8 +12,12 @@ import {
   generateQuizPrompt,
   quizCreationSchema,
 } from '../prompts/generateQuiz';
-import { getFilesFromDto } from '../../common/utils/genFiles.util';
+import {
+  getFilesFromDto,
+  UploadedFileWithMime,
+} from '../../common/utils/genFiles.util'; // Import UploadedFileWithMime
 import { promises as fs } from 'fs';
+import { IAiGeneratedQuizResponse } from '../../common/interfaces/quiz.interface'; // Renamed interface
 
 @Injectable()
 export class GeminiProvider implements AiProvider {
@@ -39,15 +43,16 @@ export class GeminiProvider implements AiProvider {
     }
   }
 
-  async generateQuiz(dto: generateQuizDto): Promise<string> {
+  async generateQuiz(dto: generateQuizDto): Promise<IAiGeneratedQuizResponse> {
+    // Use new AI response interface
     let fileParts: any[] = [];
     let geminiUploads: any[] = [];
-    let uploads;
+    let uploads: UploadedFileWithMime[] = []; // Explicitly type uploads
     try {
       uploads = [
-        ...await (getFilesFromDto(dto.images) ?? []),
-        ...await (getFilesFromDto(dto.videos) ?? []),
-        ...await (getFilesFromDto(dto.pdfs) ?? []),
+        ...(await (getFilesFromDto(dto.images) ?? [])),
+        ...(await (getFilesFromDto(dto.videos) ?? [])),
+        ...(await (getFilesFromDto(dto.pdfs) ?? [])),
       ];
       // console.log(uploads)
 
@@ -59,8 +64,7 @@ export class GeminiProvider implements AiProvider {
             file: element.path,
             config: { mimeType: element.mimetype },
           });
-        })
-
+        });
 
         geminiUploads = await Promise.all(uploadPromises);
 
@@ -128,9 +132,8 @@ export class GeminiProvider implements AiProvider {
         },
       });
 
-      return response.text ?? '';
-    }
-    catch (error: any) {
+      return JSON.parse(response.text ?? '');
+    } catch (error: any) {
       if (error instanceof ApiError) {
         console.error('API Error:', error.message);
         throw new Error(`API Error: ${error.message}`);
@@ -138,9 +141,8 @@ export class GeminiProvider implements AiProvider {
         console.error('Unexpected Error:', error);
         throw new Error(`Unexpected Error: ${error.message}`);
       }
-    }
-    finally {
-      console.log(uploads.map((file) => file.path));
+    } finally {
+      // console.log(uploads.map((file) => file.path));
       await this._cleanupFiles(uploads.map((file) => file.path) || []);
     }
   }

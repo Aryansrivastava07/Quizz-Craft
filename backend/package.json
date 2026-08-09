@@ -37,6 +37,7 @@
     "class-validator": "^0.15.1",
     "jsonwebtoken": "^9.0.3",
     "keyv": "^5.6.0",
+    "mime": "^4.1.0",
     "mongoose": "^9.7.2",
     "reflect-metadata": "^0.2.2",
     "resend": "^6.17.1",

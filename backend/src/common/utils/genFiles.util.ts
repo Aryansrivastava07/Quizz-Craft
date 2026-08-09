@@ -1,8 +1,16 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { randomUUID } from 'crypto';
+import mime from 'mime';
 
-export const getFilesFromDto = async (fileContents: any) => {
+// New interface for the return type of getFilesFromDto
+export interface UploadedFileWithMime {
+  path: string;
+  mimetype: string;
+}
+export const getFilesFromDto = async (
+  fileContents: any,
+): Promise<UploadedFileWithMime[]> => {
   if (!fileContents || fileContents.length === 0) {
     return [];
   }
@@ -18,9 +26,16 @@ export const getFilesFromDto = async (fileContents: any) => {
 
     await fs.writeFile(filePath, fileContent.buffer);
 
+    const determinedMimeType =
+      mime.getType(fileContent.originalname) || fileContent.mimetype;
+
     return {
       path: filePath,
-      mimetype: fileContent.mimetype,
+      // mimetype:
+      //   fileContent.mimetype == 'application/octet-stream'
+      //     ? `application/${fileContent.originalname.split('.')[fileContent.originalname.split('.').length - 1]}`
+      //     : fileContent.mimetype,
+      mimetype: determinedMimeType,
     };
   });
 
