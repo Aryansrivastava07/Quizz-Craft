@@ -22,17 +22,18 @@ You are an expert quiz creator. Your task is to generate a high-quality quiz bas
 4.  **Output Format (Strict):**
     *   Output a single JSON object.
     *   The root object must have a "quiz" key.
-    *   The "quiz" object must contain a "title" (string) and a "questions" (array) property.
-    *   Each object in the "questions" array must adhere to the following structure precisely:
-      {
-        "question": "The full question text.",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "answer": 0, // The 0-based index of the correct answer in the "options" array.
-        "explanation": "A brief explanation of why this is the correct answer."
-      }
-    *   Do not include any introductory or concluding remarks, code block formatting (like "json"), or any text outside of the single JSON object.
+    *   Follow this strict format exactly  : ${quizCreationSchema}
 `;
 
+// *   The "quiz" object must contain a "title" (string) and a "questions" (array) property.
+// *   Each object in the "questions" array must adhere to the following structure precisely:
+//   {
+//     "question": "The full question text.",
+//     "options": ["Option A", "Option B", "Option C", "Option D"],
+//     "answer": 0, // The 0-based index of the correct answer in the "options" array.
+//     "explanation": "A brief explanation of why this is the correct answer."
+//   }
+// *   Do not include any introductory or concluding remarks, code block formatting (like "json"), or any text outside of the single JSON object.
 export const quizCreationSchema = {
   type: 'object',
   properties: {

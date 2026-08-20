@@ -30,18 +30,19 @@ export class QuizService {
           title: generatedQuiz?.quiz.title,
           questions: generatedQuiz?.quiz.questions,
         };
+        console.log('Generated Quiz:', generatedQuiz.quiz.questions[0]);
         const createdQuiz = await this.QuizModel.create(newQuiz);
         return {
           message: 'Quiz generated successfully',
           data: {
-            quiz: createdQuiz as Quiz & IQuiz,
+            quiz:  createdQuiz as  Quiz & IQuiz,
           },
         };
       } catch (error) {
         console.error('Error while creating new quiz object:', error);
         throw new Error('Failed to create new quiz object');
       }
-      console.log('Generated Quiz:', generatedQuiz);
+      
     } catch (error: any) {
       throw new Error(`Failed to generate quiz: ${error}`);
     }
