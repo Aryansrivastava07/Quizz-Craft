@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, isString, IsString } from 'class-validator';
 
 export class generateQuizDto {
   @IsString()
@@ -13,4 +13,20 @@ export class generateQuizDto {
 
   @IsOptional()
   pdfs!: Express.Multer.File[];
+}
+
+export class attemptQuizDto {
+  @IsString()
+  @IsNotEmpty()
+  quizId!: string;
+}
+
+export class answerQuizDto {
+  @IsString()
+  @IsNotEmpty()
+  questionId!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  option!: string;
 }

@@ -35,6 +35,9 @@ export class User {
   @Prop({ default: 0 })
   averageScore!: number;
 
+  @Prop({ default: 0 })
+  quizAttempted!: number;
+
   @Prop({ default: null })
   verificationId!: string;
 
