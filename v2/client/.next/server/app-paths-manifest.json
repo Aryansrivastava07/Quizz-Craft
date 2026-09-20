@@ -1,6 +1,0 @@
-{
-  "/not-found/page": "app/not-found/page.js",
-  "/profile/page": "app/profile/page.js",
-  "/editor/page": "app/editor/page.js",
-  "/results/page": "app/results/page.js"
-}
