@@ -30,7 +30,7 @@ export class GeminiProvider implements AiProvider {
     });
 
     this.model =
-      this.configService.get<string>('GEMINI_MODEL') ?? 'gemini-3.6-flash';
+      this.configService.get<string>('GEMINI_MODEL') ?? 'gemini-3.8-pro';
   }
 
   private async _cleanupFiles(filePaths: string[]): Promise<void> {

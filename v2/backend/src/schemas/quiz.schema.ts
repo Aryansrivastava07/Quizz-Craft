@@ -11,6 +11,18 @@ export class Quiz {
   @Prop({ required: true })
   title!: string;
 
+  @Prop({ type: Boolean, default: true })
+  immediateResult?: boolean;
+
+  @Prop({ type: Number, default: 60 })
+  questime?: number;
+
+  @Prop({ type: Boolean, default: true })
+  dynamicShuffle?: boolean;
+
+  @Prop({ type: Boolean, default: true })
+  temporalLimit?: boolean;
+
   @Prop({
     type: [
       {
@@ -18,7 +30,9 @@ export class Quiz {
         question: { type: String, required: true },
         options: { type: [String], required: true },
         answer: { type: String, required: true },
-        explanation: { type: String, required: true },
+        explanation: { type: String, default: '' },
+        level: { type: String, default: 'MEDIUM' },
+        xp: { type: Number, default: 200 },
       },
     ],
     required: true,
@@ -29,6 +43,8 @@ export class Quiz {
     options: string[];
     answer: string;
     explanation: string;
+    level?: string;
+    xp?: number;
   }[];
 }
 

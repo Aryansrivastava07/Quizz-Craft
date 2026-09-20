@@ -13,14 +13,15 @@ import {
 } from './dto/profile.response.dto';
 import { User } from '../schemas/user.schema';
 import { Model } from 'mongoose';
-import { NotFoundError } from 'rxjs';
 import { Quiz } from '../schemas/quiz.schema';
+import { Attempts } from '../schemas/attempts.schema';
 
 @Injectable()
 export class ProfileService {
   constructor(
     @Inject('USER_MODEL') private UserModel: Model<User>,
     @Inject('QUIZ_MODEL') private QuizModel: Model<Quiz>,
+    @Inject('ATTEMPTS_MODEL') private AttemptsModel: Model<Attempts>,
   ) {}
 
   async getProfile(
@@ -44,7 +45,7 @@ export class ProfileService {
     try {
       const user = await this.UserModel.findOne({ email: email });
       if (!user) {
-        throw new NotFoundError('User not found');
+        throw new Error('User not found');
       }
       user.username = userName;
       await user.save();
@@ -59,35 +60,60 @@ export class ProfileService {
 
   async GetQuizzesForProfile(
     email: string,
-  ): Promise<ServiceResponse<GetQuizzesForProfileResponseData>> {
+  ): Promise<ServiceResponse<{ quizzes: any[] }>> {
     try {
-      const quizzes = await this.QuizModel.findById(email).populate('quizzes');
-      if (!quizzes) {
-        throw new NotFoundError('No Quiz Found for this user');
-      }
+      const quizzes = await this.QuizModel.find().sort({ _id: -1 }).lean();
       return {
         message: 'Quizzes found',
-        data: { quizzes: quizzes },
+        data: { quizzes },
       };
     } catch (error) {
+      console.error('Error in GetQuizzesForProfile:', error);
       throw new InternalServerErrorException('Error fetching quizzes');
     }
   }
 
   async GetHistory(
-    email: string,
-  ): Promise<ServiceResponse<GetHistoryResponseData>> {
+    userIdOrEmail: string,
+  ): Promise<ServiceResponse<{ history: any[]; quizzes: any[] }>> {
     try {
-      const quizzes = await this.QuizModel.findById(email).populate('quizzes');
-      if (!quizzes) {
-        throw new NotFoundError('No History Found for this user');
-      }
+      const user = await this.UserModel.findOne({
+        $or: [{ email: userIdOrEmail }, { username: userIdOrEmail }],
+      });
+      const userId = user ? (user as any)._id?.toString() : userIdOrEmail;
+
+      const attempts = await this.AttemptsModel.find({
+        $or: [
+          { userId: userIdOrEmail },
+          { userId: String(userId) },
+        ],
+      })
+        .sort({ lastUpdateAt: -1 })
+        .lean();
+
+      const quizIds = attempts.map((a) => a.quizId).filter(Boolean);
+      const quizzes = await this.QuizModel.find({ quizId: { $in: quizIds } }).lean();
+      const quizMap = new Map(quizzes.map((q) => [q.quizId, q]));
+
+      const enrichedHistory = attempts.map((attempt) => {
+        const matchingQuiz = quizMap.get(attempt.quizId);
+        return {
+          ...attempt,
+          title: matchingQuiz?.title || 'Interactive Arena Challenge',
+          totalQuestions: matchingQuiz?.questions?.length || attempt.Responses?.length || 10,
+        };
+      });
+
       return {
-        message: 'Quizzes found',
-        data: { quizzes: quizzes },
+        message: 'History found',
+        data: {
+          history: enrichedHistory,
+          quizzes: enrichedHistory,
+        },
       };
     } catch (error) {
-      throw new InternalServerErrorException('Error fetching quizzes');
+      console.error('Error in GetHistory:', error);
+      throw new InternalServerErrorException('Error fetching history');
     }
   }
 }

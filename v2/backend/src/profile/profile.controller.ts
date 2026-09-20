@@ -46,7 +46,7 @@ export class ProfileController {
   @HttpCode(200)
   @Get('history')
   async GetHistory(@Req() req) {
-    const { email } = req.user;
-    return this.profileService.GetHistory(email);
+    const { email, userId } = req.user;
+    return this.profileService.GetHistory(userId || email);
   }
 }

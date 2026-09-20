@@ -30,3 +30,24 @@ export class answerQuizDto {
   @IsNotEmpty()
   option!: string;
 }
+
+export class editQuestionDto {
+  @IsOptional()
+  @IsString()
+  question?: string;
+
+  @IsOptional()
+  options?: string[];
+
+  @IsOptional()
+  @IsString()
+  answer?: string;
+
+  @IsOptional()
+  @IsString()
+  explanation?: string;
+
+  @IsOptional()
+  @IsString()
+  level?: string;
+}

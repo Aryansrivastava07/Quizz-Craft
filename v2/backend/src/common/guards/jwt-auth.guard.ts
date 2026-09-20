@@ -9,7 +9,11 @@ export class JwtAuthGuard implements CanActivate {
     ) { }
     canActivate(context: ExecutionContext): boolean {
         const request = context.switchToHttp().getRequest();
-        const token = request.cookies?.accessToken
+        const authHeader = request.headers?.['authorization'] || request.headers?.['Authorization'];
+        const bearerToken = typeof authHeader === 'string' && authHeader.startsWith('Bearer ')
+            ? authHeader.substring(7)
+            : null;
+        const token = request.cookies?.accessToken || bearerToken;
         if (!token) {
             throw new UnauthorizedException('Access token not found');
         }
