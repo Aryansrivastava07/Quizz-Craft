@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quantum Computing Assessment — QuizzCraft.app</title>
+<!-- Google Fonts: Sora, Outfit, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&amp;family=Outfit:wght@300;400;500;600;700&amp;family=Sora:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration Verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#d0bcff",
+            "surface": "#0f131d",
+            "error-container": "#93000a",
+            "tertiary-fixed": "#acedff",
+            "outline-variant": "#494454",
+            "secondary-container": "#3626ce",
+            "inverse-on-surface": "#2c303b",
+            "on-primary": "#3c0091",
+            "on-primary-fixed-variant": "#5516be",
+            "on-error-container": "#ffdad6",
+            "surface-container-lowest": "#0a0e18",
+            "surface-container": "#1c1f2a",
+            "background": "#0f131d",
+            "on-primary-container": "#340080",
+            "on-tertiary-fixed": "#001f26",
+            "on-primary-fixed": "#23005c",
+            "secondary-fixed-dim": "#c3c0ff",
+            "secondary": "#c3c0ff",
+            "surface-bright": "#353944",
+            "primary": "#d0bcff",
+            "on-error": "#690005",
+            "on-secondary-fixed-variant": "#3323cc",
+            "on-surface": "#dfe2f1",
+            "surface-container-low": "#171b26",
+            "on-tertiary": "#003640",
+            "error": "#ffb4ab",
+            "on-secondary": "#1d00a5",
+            "inverse-surface": "#dfe2f1",
+            "tertiary": "#4cd7f6",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "on-secondary-fixed": "#0f0069",
+            "on-tertiary-container": "#002f38",
+            "inverse-primary": "#6d3bd7",
+            "surface-tint": "#d0bcff",
+            "primary-container": "#a078ff",
+            "on-background": "#dfe2f1",
+            "tertiary-container": "#009eb9",
+            "surface-variant": "#313540",
+            "secondary-fixed": "#e2dfff",
+            "surface-container-high": "#262a35",
+            "on-surface-variant": "#cbc3d7",
+            "surface-dim": "#0f131d",
+            "primary-fixed": "#e9ddff",
+            "surface-container-highest": "#313540",
+            "on-secondary-container": "#b3b1ff",
+            "outline": "#958ea0"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.5rem",
+            "space-sm": "0.75rem",
+            "max-width-canvas": "1280px",
+            "space-xl": "2rem",
+            "space-2xl": "3rem",
+            "space-3xs": "0.125rem",
+            "gutter-mobile": "1rem",
+            "space-2xs": "0.25rem",
+            "gutter-desktop": "2rem",
+            "space-3xl": "4rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "display-hero-mobile": ["Sora"],
+            "headline-xl-mobile": ["Sora"],
+            "body-sm": ["Outfit"],
+            "headline-xl": ["Sora"],
+            "body-lg": ["Outfit"],
+            "body-md": ["Outfit"],
+            "stat-counter": ["JetBrains Mono"],
+            "headline-lg": ["Sora"],
+            "headline-sm": ["Sora"],
+            "display-hero": ["Sora"],
+            "label-code": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+            "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "stat-counter": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "label-code": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Custom spatial canvas depth */
+    .cosmic-canvas {
+      background: radial-gradient(circle at 50% 10%, rgba(160, 120, 255, 0.12) 0%, rgba(10, 14, 24, 0.98) 75%), #0a0e18;
+    }
+    .frosted-glass-card {
+      background: linear-gradient(135deg, rgba(28, 31, 42, 0.72) 0%, rgba(15, 19, 29, 0.88) 100%);
+      backdrop-filter: blur(28px);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+    }
+    .glow-active-option {
+      box-shadow: 0 0 24px -4px rgba(160, 120, 255, 0.45), 0 0 12px rgba(76, 215, 246, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-primary-container selection:text-on-primary-container relative overflow-x-hidden">
+<!-- Interactive Cosmic Canvas & Ambient Star Field -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-primary-container/10 rounded-full blur-[120px] transition-transform duration-700" id="ambient-radial-glow"></div>
+<div class="absolute bottom-0 right-10 w-[500px] h-[400px] bg-tertiary-container/10 rounded-full blur-[140px]"></div>
+<!-- Micro Particle Grid Canvas for Cursor Magnetic Shift -->
+<canvas class="w-full h-full opacity-60" id="starfield"></canvas>
+</div>
+<!-- Distraction-Free Header / Precision Utility Toolbar (No site navigation) -->
+<header class="relative z-20 w-full pt-space-md px-gutter-mobile md:px-gutter-desktop">
+<div class="max-w-max-width-canvas mx-auto flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<!-- Left: Quiz Identity & Module Badge -->
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-space-xs px-space-sm py-space-3xs rounded-full bg-surface-container border border-outline-variant/30 text-secondary">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="memory">memory</span>
+<span class="font-label-code text-label-code text-primary tracking-wide">QuizzCraft // SIM-04</span>
+</div>
+<div class="h-4 w-[1px] bg-outline-variant/40 hidden sm:block"></div>
+<h1 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight hidden sm:inline-block">
+          Quantum Computing Principles <span class="text-on-surface-variant font-normal text-body-sm">// Quiz #04</span>
+</h1>
+</div>
+<!-- Right: Live Timer, Adaptive Difficulty & Counter Pill -->
+<div class="flex items-center gap-space-sm">
+<!-- Adaptive Level Pill -->
+<div class="hidden md:flex items-center gap-space-2xs px-space-sm py-space-3xs rounded-full bg-surface-container-low border border-outline-variant/30">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-code text-label-code text-tertiary">Adaptive • Medium</span>
+</div>
+<!-- Question Counter Pill -->
+<div class="flex items-center gap-space-2xs px-space-sm py-space-3xs rounded-full bg-surface-container-high border border-outline-variant/40">
+<span class="font-label-code text-label-code text-on-surface-variant">Question</span>
+<span class="font-stat-counter text-body-md text-primary font-bold">04</span>
+<span class="font-label-code text-label-code text-on-surface-variant">/ 15</span>
+</div>
+<!-- Timer Pill -->
+<div class="flex items-center gap-space-xs px-space-sm py-space-3xs rounded-full bg-surface-container-low border border-primary-container/40 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="timer">timer</span>
+<span class="font-stat-counter text-label-code text-primary font-bold tracking-wider" id="countdown-timer">14:28</span>
+<span class="font-label-code text-[11px] text-on-surface-variant hidden lg:inline">remaining</span>
+</div>
+<!-- Zen Mode Indicator / Audio Control Minimal Button -->
+<button aria-label="Audio Ambient" class="p-space-2xs rounded-full hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="graphic_eq">graphic_eq</span>
+</button>
+</div>
+</div>
+<!-- Sleek Precision Progress Bar (27% - 4 of 15 completed) -->
+<div class="max-w-max-width-canvas mx-auto w-full mt-space-2xs">
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden relative shadow-inner">
+<!-- Progress track fill with cyan/violet chromatic flow -->
+<div class="h-full bg-gradient-to-r from-tertiary via-primary to-primary-container rounded-full w-[26.66%] relative transition-all duration-500 ease-out shadow-[0_0_12px_rgba(160,120,255,0.8)]">
+<div class="absolute right-0 top-0 bottom-0 w-2 bg-white rounded-full blur-[1px] opacity-80"></div>
+</div>
+</div>
+<div class="flex justify-between items-center mt-space-3xs px-space-2xs">
+<span class="font-label-code text-[11px] text-on-surface-variant">Session Progress</span>
+<span class="font-label-code text-[11px] text-tertiary">26.7% Complete (4/15)</span>
+</div>
+</div>
+</header>
+<!-- Main Question Stage (Floating Glassmorphic Cockpit) -->
+<main class="relative z-10 flex-1 flex flex-col justify-center px-gutter-mobile md:px-gutter-desktop py-space-md max-w-max-width-canvas w-full mx-auto">
+<div class="frosted-glass-card rounded-2xl border border-outline-variant/30 p-space-lg md:p-space-xl transition-all duration-300">
+<!-- Card Context Header: Section Tag & Review Quick Pin -->
+<div class="flex items-center justify-between border-b border-outline-variant/20 pb-space-sm mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[18px]" data-icon="deployed_code">deployed_code</span>
+<span class="font-label-code text-label-code text-tertiary tracking-wider font-semibold">
+            QUANTUM MECHANICS &amp; SUPERPOSITION // SEC 4.2
+          </span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-code text-[11px] text-on-surface-variant hidden sm:inline">Score Weight: +150 XP</span>
+<button class="flex items-center gap-space-3xs text-on-surface-variant hover:text-primary transition-colors text-label-code font-label-code" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="bookmark">bookmark</span>
+<span class="hidden sm:inline">Mark</span>
+</button>
+</div>
+</div>
+<!-- Question Text -->
+<div class="mb-space-lg">
+<h2 class="font-headline-lg text-headline-sm md:text-headline-lg text-on-surface font-semibold leading-snug tracking-tight">
+          In quantum circuit design, what occurs to a qubit in an equal superposition state <span class="text-primary font-mono text-[90%]">(|0⟩ + |1⟩)/√2</span> when measured along the standard computational basis <span class="text-primary font-mono text-[90%]">{ |0⟩, |1⟩ }</span>?
+        </h2>
+</div>
+<!-- Center Grid: Technical Reference Schematic Graphic + Choices Column -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Reference Visual Container (Bloch Sphere / Quantum Circuit Telemetry Graphic) -->
+<div class="lg:col-span-5 flex flex-col gap-space-xs">
+<div class="relative rounded-xl overflow-hidden border border-outline-variant/30 bg-surface-container-low group">
+<!-- Reference Image with designated placeholder https://lh3.googleusercontent.com/aida/AEtjO1VfXTICmYCceXDtg8s6SNx-t_chgU2im36_IymwI7L1TNn-wbtEtiSQyKuDcgT_dJ6XeZz_poPAKC0oILYSKG9O2X7Zomb-yquNpS2MLtvWwKakuE8On-JK9jXnM8iO45aM7tOonj9B5I6kSPT2fQosL2oR2yrCqDm2VdEwvXAMl4X0xVZbza8YYAFgN1MKYreG3NFUvPBpAcpdMfgDsVp33piXWFL-5Sn1h2Wf5Zfg_5X9OJ9VJxWsLA -->
+<div class="aspect-video lg:aspect-square w-full relative overflow-hidden bg-surface-container-lowest flex items-center justify-center">
+<img alt="Quantum circuit and holographic Bloch sphere visualization representation" class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500 opacity-90 hover:opacity-100" src="https://lh3.googleusercontent.com/aida/AEtjO1VfXTICmYCceXDtg8s6SNx-t_chgU2im36_IymwI7L1TNn-wbtEtiSQyKuDcgT_dJ6XeZz_poPAKC0oILYSKG9O2X7Zomb-yquNpS2MLtvWwKakuE8On-JK9jXnM8iO45aM7tOonj9B5I6kSPT2fQosL2oR2yrCqDm2VdEwvXAMl4X0xVZbza8YYAFgN1MKYreG3NFUvPBpAcpdMfgDsVp33piXWFL-5Sn1h2Wf5Zfg_5X9OJ9VJxWsLA"/>
+<!-- Translucent Technical Overlay HUD -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent pointer-events-none"></div>
+<!-- Zoom / Expand Action -->
+<button aria-label="Enlarge Diagram" class="absolute top-space-xs right-space-xs p-space-2xs rounded-lg bg-surface-container/80 backdrop-blur-md border border-outline-variant/30 text-on-surface hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="zoom_in">zoom_in</span>
+</button>
+<!-- State telemetry chip -->
+<div class="absolute bottom-space-xs left-space-xs px-space-xs py-space-3xs rounded bg-surface-container-lowest/80 backdrop-blur-md border border-outline-variant/30 font-label-code text-[11px] text-tertiary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Basis: |Ψ⟩ = α|0⟩ + β|1⟩</span>
+</div>
+</div>
+<!-- Visual Legend Caption -->
+<div class="p-space-xs border-t border-outline-variant/20 bg-surface-container-low/70 flex items-center justify-between">
+<p class="font-body-sm text-[12px] text-on-surface-variant italic">
+                Fig 4.2 — State Vector Collapse on Bloch Sphere Representation
+              </p>
+<span class="font-label-code text-[10px] text-outline uppercase tracking-wider">Hi-Res Vector</span>
+</div>
+</div>
+</div>
+<!-- Right: Interactive Options List (A, B, C, D) -->
+<div class="lg:col-span-7 flex flex-col gap-space-sm" id="options-group">
+<!-- Option A: Standard Unselected -->
+<button class="w-full text-left rounded-xl p-space-md border border-outline-variant/30 bg-surface-container-low/60 hover:bg-surface-container/70 hover:border-outline-variant/60 transition-all duration-200 group flex items-start gap-space-md relative overflow-hidden" type="button">
+<div class="flex-shrink-0 w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center font-label-code text-label-code text-on-surface-variant group-hover:text-primary group-hover:border-primary transition-colors">
+              A
+            </div>
+<div class="flex-1 pt-0.5">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                It collapses deterministically into state <span class="font-mono text-primary font-semibold">|1⟩</span> due to phase decoherence.
+              </p>
+</div>
+<div class="flex-shrink-0 flex items-center gap-space-xs self-center">
+<span class="font-label-code text-[11px] text-outline-variant group-hover:text-on-surface-variant transition-colors">[1]</span>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant group-hover:border-outline transition-colors flex items-center justify-center"></div>
+</div>
+</button>
+<!-- Option B: Actively Selected (Highlighted with glowing violet/cyan corona) -->
+<button class="w-full text-left rounded-xl p-space-md border-2 border-primary-container bg-surface-container-high/90 glow-active-option transition-all duration-200 group flex items-start gap-space-md relative overflow-hidden ring-1 ring-tertiary/40" type="button">
+<!-- Active Indicator Pill/Badge -->
+<div class="flex-shrink-0 w-8 h-8 rounded-lg bg-primary text-on-primary font-headline-sm text-[15px] font-bold flex items-center justify-center shadow-md">
+              B
+            </div>
+<div class="flex-1 pt-0.5">
+<p class="font-body-md text-body-md text-on-surface font-medium leading-relaxed">
+                It collapses into either <span class="font-mono text-tertiary font-bold">|0⟩</span> or <span class="font-mono text-tertiary font-bold">|1⟩</span> with equal 50% probability, permanently destroying superposition.
+              </p>
+</div>
+<div class="flex-shrink-0 flex items-center gap-space-xs self-center">
+<span class="font-label-code text-[11px] text-primary font-semibold">[2]</span>
+<div class="w-5 h-5 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_8px_rgba(160,120,255,0.8)]">
+<span class="material-symbols-outlined text-[16px] font-bold" data-icon="check">check</span>
+</div>
+</div>
+<!-- Subtle edge illumination stripe -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-tertiary to-primary-container"></div>
+</button>
+<!-- Option C: Unselected -->
+<button class="w-full text-left rounded-xl p-space-md border border-outline-variant/30 bg-surface-container-low/60 hover:bg-surface-container/70 hover:border-outline-variant/60 transition-all duration-200 group flex items-start gap-space-md relative overflow-hidden" type="button">
+<div class="flex-shrink-0 w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center font-label-code text-label-code text-on-surface-variant group-hover:text-primary group-hover:border-primary transition-colors">
+              C
+            </div>
+<div class="flex-1 pt-0.5">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                It remains in superposition while emitting a measurable photon.
+              </p>
+</div>
+<div class="flex-shrink-0 flex items-center gap-space-xs self-center">
+<span class="font-label-code text-[11px] text-outline-variant group-hover:text-on-surface-variant transition-colors">[3]</span>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant group-hover:border-outline transition-colors flex items-center justify-center"></div>
+</div>
+</button>
+<!-- Option D: Unselected -->
+<button class="w-full text-left rounded-xl p-space-md border border-outline-variant/30 bg-surface-container-low/60 hover:bg-surface-container/70 hover:border-outline-variant/60 transition-all duration-200 group flex items-start gap-space-md relative overflow-hidden" type="button">
+<div class="flex-shrink-0 w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 flex items-center justify-center font-label-code text-label-code text-on-surface-variant group-hover:text-primary group-hover:border-primary transition-colors">
+              D
+            </div>
+<div class="flex-1 pt-0.5">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                It duplicates into two entangled ancillary states according to no-cloning theorem.
+              </p>
+</div>
+<div class="flex-shrink-0 flex items-center gap-space-xs self-center">
+<span class="font-label-code text-[11px] text-outline-variant group-hover:text-on-surface-variant transition-colors">[4]</span>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant group-hover:border-outline transition-colors flex items-center justify-center"></div>
+</div>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Control Bar & Precision Navigation Row -->
+<footer class="relative z-20 w-full pb-space-lg pt-space-xs px-gutter-mobile md:px-gutter-desktop">
+<div class="max-w-max-width-canvas mx-auto bg-surface-container-low/80 backdrop-blur-xl border border-outline-variant/30 rounded-2xl p-space-sm md:px-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md shadow-2xl">
+<!-- Left: Flag Bookmark Action + Keyboard Shortcuts Legend -->
+<div class="flex items-center justify-between w-full md:w-auto gap-space-md">
+<button class="flex items-center gap-space-xs px-space-md py-space-xs rounded-xl bg-surface-container border border-outline-variant/30 hover:border-outline text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="flag">flag</span>
+<span class="font-body-sm text-body-sm font-medium">Flag for Review</span>
+</button>
+<div class="hidden xl:flex items-center gap-space-xs text-on-surface-variant font-label-code text-[11px]">
+<span class="px-1.5 py-0.5 rounded bg-surface-container border border-outline-variant/30">← Prev</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container border border-outline-variant/30">Next →</span>
+</div>
+</div>
+<!-- Center: Question Jumper Matrix (1-15 Matrix Pills) -->
+<div class="flex items-center gap-1.5 overflow-x-auto max-w-full py-1 px-2 border-y md:border-none border-outline-variant/20">
+<!-- Q1 Answered -->
+<button class="w-7 h-7 rounded-lg bg-surface-container-high border border-outline-variant/40 text-tertiary font-label-code text-[11px] font-bold flex items-center justify-center hover:border-tertiary transition-colors" title="Question 1 (Completed)" type="button">
+          1
+        </button>
+<!-- Q2 Answered -->
+<button class="w-7 h-7 rounded-lg bg-surface-container-high border border-outline-variant/40 text-tertiary font-label-code text-[11px] font-bold flex items-center justify-center hover:border-tertiary transition-colors" title="Question 2 (Completed)" type="button">
+          2
+        </button>
+<!-- Q3 Answered -->
+<button class="w-7 h-7 rounded-lg bg-surface-container-high border border-outline-variant/40 text-tertiary font-label-code text-[11px] font-bold flex items-center justify-center hover:border-tertiary transition-colors" title="Question 3 (Completed)" type="button">
+          3
+        </button>
+<!-- Q4 Current Active -->
+<button class="w-7 h-7 rounded-lg bg-primary text-on-primary font-label-code text-[11px] font-extrabold flex items-center justify-center shadow-[0_0_10px_rgba(208,188,255,0.7)] ring-2 ring-primary-container" title="Question 4 (Current Active)" type="button">
+          4
+        </button>
+<!-- Q5-15 Pending -->
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 5" type="button">5</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 6" type="button">6</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 7" type="button">7</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 8" type="button">8</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 9" type="button">9</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 10" type="button">10</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 11" type="button">11</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 12" type="button">12</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 13" type="button">13</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 14" type="button">14</button>
+<button class="w-7 h-7 rounded-lg bg-surface-container-lowest border border-outline-variant/20 text-on-surface-variant font-label-code text-[11px] flex items-center justify-center hover:border-outline-variant transition-colors" title="Question 15" type="button">15</button>
+</div>
+<!-- Right: Action Buttons Group (Next Question & Submit Quiz) -->
+<div class="flex items-center gap-space-sm w-full md:w-auto justify-end">
+<!-- Previous Question (Subtle outline action) -->
+<button class="px-space-md py-space-xs rounded-xl bg-surface-container border border-outline-variant/30 text-on-surface hover:border-outline transition-colors flex items-center gap-space-2xs text-body-sm font-body-sm" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_back">arrow_back</span>
+<span class="hidden sm:inline">Previous</span>
+</button>
+<!-- Next Question Primary Kinetic Action -->
+<button class="px-space-lg py-space-xs rounded-xl bg-gradient-to-r from-primary-container to-secondary-container hover:opacity-95 text-white font-headline-sm text-body-md font-semibold flex items-center gap-space-2xs shadow-lg shadow-primary-container/25 active:scale-95 transition-all" type="button">
+<span>Next Question</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<!-- Submit Quiz High-Visibility Action -->
+<button class="px-space-md py-space-xs rounded-xl bg-surface-container-high border border-tertiary-container text-tertiary hover:bg-tertiary-container hover:text-on-tertiary transition-all flex items-center gap-space-2xs text-body-sm font-body-sm font-semibold active:scale-95" id="submit-quiz-btn" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="task_alt">task_alt</span>
+<span>Submit</span>
+</button>
+</div>
+</div>
+</footer>
+<!-- Clean Subtle Interactive Canvas & Micro-Interactions Script -->
+<script>
+    // 1. Subtle Magnetic Starfield / Particle Background
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null, radius: 100 };
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.baseX = x;
+        this.baseY = y;
+        this.size = Math.random() * 1.5 + 0.5;
+        this.color = Math.random() > 0.3 ? 'rgba(208, 188, 255, 0.4)' : 'rgba(76, 215, 246, 0.4)';
+        this.density = (Math.random() * 20) + 1;
+      }
+
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      update() {
+        if (mouse.x !== null) {
+          let dx = mouse.x - this.x;
+          let dy = mouse.y - this.y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            const directionX = (dx / distance) * force * this.density;
+            const directionY = (dy / distance) * force * this.density;
+            this.x -= directionX;
+            this.y -= directionY;
+          } else {
+            if (this.x !== this.baseX) {
+              let dx = this.x - this.baseX;
+              this.x -= dx / 15;
+            }
+            if (this.y !== this.baseY) {
+              let dy = this.y - this.baseY;
+              this.y -= dy / 15;
+            }
+          }
+        }
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.floor((canvas.width * canvas.height) / 14000);
+      for (let i = 0; i < particleCount; i++) {
+        let x = Math.random() * canvas.width;
+        let y = Math.random() * canvas.height;
+        particles.push(new Particle(x, y));
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].draw();
+        particles[i].update();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', function(e) {
+      mouse.x = e.x;
+      mouse.y = e.y;
+      
+      // Subtle ambient light displacement
+      const glow = document.getElementById('ambient-radial-glow');
+      if (glow) {
+        const moveX = (e.clientX / window.innerWidth - 0.5) * 60;
+        glow.style.transform = `translate(calc(-50% + ${moveX}px), 0)`;
+      }
+    });
+
+    window.addEventListener('mouseout', function() {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    resizeCanvas();
+    animate();
+
+    // 2. Countdown Timer simulation
+    let secondsLeft = 14 * 60 + 28;
+    const timerDisplay = document.getElementById('countdown-timer');
+    setInterval(() => {
+      if (secondsLeft > 0) {
+        secondsLeft--;
+        const mins = Math.floor(secondsLeft / 60);
+        const secs = secondsLeft % 60;
+        timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      }
+    }, 1000);
+
+    // 3. Option Selection Keyboard Binding ([1], [2], [3], [4])
+    window.addEventListener('keydown', (e) => {
+      const options = document.querySelectorAll('#options-group > button');
+      if (['1', '2', '3', '4'].includes(e.key)) {
+        const index = parseInt(e.key) - 1;
+        if (options[index]) {
+          options[index].click();
+        }
+      }
+    });
+  </script>
+</body></html>

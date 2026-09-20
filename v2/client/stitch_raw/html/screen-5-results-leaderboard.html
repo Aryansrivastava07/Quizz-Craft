@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quiz Results &amp; Leaderboard Analytics | QuizzCraft.app</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Outfit:wght@300;400;500;600&amp;family=Sora:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-tint": "#d0bcff",
+            "on-secondary-container": "#b3b1ff",
+            "inverse-on-surface": "#2c303b",
+            "inverse-surface": "#dfe2f1",
+            "on-tertiary-fixed": "#001f26",
+            "secondary-fixed": "#e2dfff",
+            "on-primary-container": "#340080",
+            "secondary-fixed-dim": "#c3c0ff",
+            "inverse-primary": "#6d3bd7",
+            "error": "#ffb4ab",
+            "primary-fixed-dim": "#d0bcff",
+            "on-tertiary-container": "#002f38",
+            "outline-variant": "#494454",
+            "primary-fixed": "#e9ddff",
+            "surface-container": "#1c1f2a",
+            "primary-container": "#a078ff",
+            "background": "#0f131d",
+            "tertiary-container": "#009eb9",
+            "on-secondary-fixed-variant": "#3323cc",
+            "on-error": "#690005",
+            "outline": "#958ea0",
+            "on-surface": "#dfe2f1",
+            "on-error-container": "#ffdad6",
+            "surface-container-low": "#171b26",
+            "on-tertiary": "#003640",
+            "secondary-container": "#3626ce",
+            "on-primary-fixed-variant": "#5516be",
+            "tertiary": "#4cd7f6",
+            "surface-container-highest": "#313540",
+            "surface-dim": "#0f131d",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "surface-variant": "#313540",
+            "error-container": "#93000a",
+            "on-secondary-fixed": "#0f0069",
+            "secondary": "#c3c0ff",
+            "surface": "#0f131d",
+            "on-surface-variant": "#cbc3d7",
+            "tertiary-fixed": "#acedff",
+            "on-primary": "#3c0091",
+            "on-secondary": "#1d00a5",
+            "surface-container-lowest": "#0a0e18",
+            "on-primary-fixed": "#23005c",
+            "surface-container-high": "#262a35",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "on-background": "#dfe2f1",
+            "surface-bright": "#353944",
+            "primary": "#d0bcff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-2xs": "0.25rem",
+            "space-3xs": "0.125rem",
+            "space-2xl": "3rem",
+            "max-width-canvas": "1280px",
+            "space-sm": "0.75rem",
+            "gutter-mobile": "1rem",
+            "gutter-desktop": "2rem",
+            "space-3xl": "4rem",
+            "space-xs": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Sora"],
+            "display-hero": ["Sora"],
+            "label-code": ["JetBrains Mono"],
+            "body-sm": ["Outfit"],
+            "headline-xl": ["Sora"],
+            "stat-counter": ["JetBrains Mono"],
+            "headline-sm": ["Sora"],
+            "display-hero-mobile": ["Sora"],
+            "body-lg": ["Outfit"],
+            "body-md": ["Outfit"],
+            "headline-xl-mobile": ["Sora"]
+          },
+          "fontSize": {
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "label-code": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "stat-counter": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #07071a;
+      color: #dfe2f1;
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    .star-twinkle {
+      animation: pulseStar 4s ease-in-out infinite alternate;
+    }
+    @keyframes pulseStar {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      100% { opacity: 0.9; transform: scale(1.2); }
+    }
+    .glass-card {
+      background: linear-gradient(135deg, rgba(28, 31, 42, 0.75) 0%, rgba(15, 19, 29, 0.85) 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(208, 188, 255, 0.12);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    }
+    .glass-card:hover {
+      border-color: rgba(208, 188, 255, 0.28);
+      box-shadow: 0 0 25px -5px rgba(160, 120, 255, 0.25), 0 0 10px rgba(76, 215, 246, 0.15);
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(15, 19, 29, 0.6);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(208, 188, 255, 0.25);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen relative antialiased selection:bg-primary selection:text-on-primary">
+<!-- Parallax Cosmic Background Canvas Layer -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" id="cosmic-canvas">
+<div class="absolute -top-40 -left-40 w-[650px] h-[650px] rounded-full bg-primary/10 blur-[130px] transition-transform duration-700 ease-out" id="nebula-1"></div>
+<div class="absolute top-1/3 -right-20 w-[550px] h-[550px] rounded-full bg-tertiary/10 blur-[120px] transition-transform duration-700 ease-out" id="nebula-2"></div>
+<div class="absolute bottom-10 left-1/4 w-[700px] h-[700px] rounded-full bg-secondary-container/20 blur-[140px] transition-transform duration-700 ease-out" id="nebula-3"></div>
+<!-- Twinkling Micro Star Points -->
+<div class="absolute top-24 left-[15%] w-1 h-1 bg-white rounded-full star-twinkle"></div>
+<div class="absolute top-48 left-[82%] w-1.5 h-1.5 bg-tertiary rounded-full star-twinkle" style="animation-delay: 1.2s;"></div>
+<div class="absolute top-[42%] left-[45%] w-1 h-1 bg-primary rounded-full star-twinkle" style="animation-delay: 2.1s;"></div>
+<div class="absolute top-[68%] left-[12%] w-1 h-1 bg-white rounded-full star-twinkle" style="animation-delay: 0.6s;"></div>
+<div class="absolute top-[85%] left-[78%] w-1.5 h-1.5 bg-tertiary-fixed rounded-full star-twinkle" style="animation-delay: 1.8s;"></div>
+<div class="absolute top-[18%] left-[60%] w-1 h-1 bg-secondary rounded-full star-twinkle" style="animation-delay: 2.7s;"></div>
+</div>
+<!-- Shared Component Anchor: TopNavBar -->
+<header class="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-max-width-canvas rounded-full border border-outline-variant/30 shadow-2xl shadow-primary-container/10 bg-surface-container-low/70 dark:bg-surface-container-lowest/70 backdrop-blur-md flex justify-between items-center px-space-lg py-space-xs z-50">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-2xs cursor-pointer group">
+<span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform duration-300" data-icon="bolt" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-headline-sm font-headline-sm tracking-tight text-primary font-extrabold">QuizzCraft.app</span>
+</div>
+<div class="h-4 w-[1px] bg-outline-variant/40 hidden md:block"></div>
+<div class="hidden md:flex items-center gap-space-2xs text-body-sm font-body-sm text-on-surface-variant">
+<span class="text-on-surface">Quantum Computing Principles</span>
+<span class="text-outline">/</span>
+<span class="font-label-code text-label-code text-tertiary">QUIZ-QC-9804</span>
+</div>
+</div>
+<!-- Center Nav Links as strictly defined in Shared Components -->
+<nav class="hidden lg:flex items-center gap-space-lg">
+<a class="text-on-surface-variant dark:text-on-surface-variant transition-colors hover:text-primary hover:border-primary-container text-body-md font-body-md" href="#">Showcase</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant transition-colors hover:text-primary hover:border-primary-container text-body-md font-body-md" href="#">How It Works</a>
+<a class="text-primary dark:text-primary font-headline-sm border-b-2 border-primary pb-1 text-body-md" href="#">Demo</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant transition-colors hover:text-primary hover:border-primary-container text-body-md font-body-md" href="#">Personas</a>
+</nav>
+<!-- Right Actions Cluster -->
+<div class="flex items-center gap-space-sm">
+<button class="hidden sm:flex items-center gap-space-2xs px-space-sm py-1.5 rounded-full border border-outline-variant/40 text-on-surface hover:text-primary hover:border-primary/50 text-body-sm font-body-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-tertiary" data-icon="replay">replay</span>
+<span>Retake Quiz</span>
+</button>
+<button class="flex items-center gap-space-2xs px-space-md py-1.5 rounded-full bg-primary-container/20 border border-primary-container/50 text-primary-fixed hover:bg-primary-container/30 text-body-sm font-headline-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-primary" data-icon="share">share</span>
+<span class="hidden sm:inline">Share Score</span>
+</button>
+<div class="flex items-center gap-space-xs pl-space-xs border-l border-outline-variant/30">
+<div class="w-8 h-8 rounded-full border border-tertiary/60 p-0.5 relative group cursor-pointer">
+<img class="w-full h-full rounded-full object-cover" data-alt="Cyberpunk high-tech portrait avatar of Alex Rivera wearing a luminous tactical pilot visor with neon purple and cyan ambient studio lighting and dark atmospheric reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4tU8TlUJX6p0Iv7H2XpfZsvQXVx3Ee1grEQiPMSVhPm6zGEBOrD5cEzv2oB6d8fd7RBrRvDpFkvb4as7hHcjIc7wV1jAfj2-WPG-eUkvAUVUGQUejD0ylHsJiwPUsdiGiyzCn0U7Udbmij6WTsowhgX_LlRA7awTgjcSuHMrKAECtKg4qIoAjcu4jRAMsUwRdWm0OGd7haviJRGdD2Mb_b_sLvj_OuRfAEVNuME7dAHCzvoGACcmx"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-tertiary rounded-full border-2 border-surface-container-lowest"></span>
+</div>
+<div class="hidden xl:flex flex-col text-left">
+<span class="font-headline-sm text-label-code text-on-surface font-semibold leading-tight">Alex Rivera</span>
+<span class="font-label-code text-[11px] text-tertiary leading-none">Cadet Rank #2</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Canvas Content -->
+<main class="relative z-10 max-w-max-width-canvas mx-auto px-gutter-mobile md:px-gutter-desktop pt-28 pb-space-3xl space-y-space-xl">
+<!-- Hero Result & XP Banner Section -->
+<section class="glass-card rounded-2xl p-space-lg md:p-space-xl relative overflow-hidden">
+<!-- Glow ambient backdrop -->
+<div class="absolute -right-16 -top-16 w-80 h-80 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -left-16 -bottom-16 w-80 h-80 bg-tertiary/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-space-lg">
+<!-- Rank & Headline -->
+<div class="space-y-space-xs max-w-2xl">
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-1 rounded-full bg-tertiary/15 border border-tertiary/40">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="military_tech">military_tech</span>
+<span class="font-label-code text-label-code text-tertiary font-bold tracking-wide">TOP 4% • COSMIC GRANDMASTER TIER</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight flex flex-wrap items-center gap-space-xs">
+<span>Rank #2</span>
+<span class="text-on-surface-variant font-body-lg text-body-lg font-normal">of 48 Participants</span>
+<span class="px-space-xs py-0.5 text-xs rounded bg-surface-container-high border border-outline-variant/40 text-primary-fixed font-label-code">Grade A+</span>
+</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">
+            Exceptional mastery demonstrated across quantum state mechanics. You outpaced 96% of cohort cadets in entanglement telemetry.
+          </p>
+</div>
+<!-- Metric Cluster -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm w-full lg:w-auto">
+<div class="bg-surface-container-high/60 border border-outline-variant/30 rounded-xl p-space-sm flex flex-col items-center justify-center text-center">
+<span class="font-label-code text-[11px] text-on-surface-variant uppercase tracking-wider">Final XP</span>
+<span class="font-stat-counter text-stat-counter text-primary font-bold">2,100</span>
+<span class="font-label-code text-[11px] text-tertiary">/ 2,250 Max</span>
+</div>
+<div class="bg-surface-container-high/60 border border-outline-variant/30 rounded-xl p-space-sm flex flex-col items-center justify-center text-center">
+<span class="font-label-code text-[11px] text-on-surface-variant uppercase tracking-wider">Accuracy</span>
+<span class="font-stat-counter text-stat-counter text-tertiary font-bold">93.3%</span>
+<span class="font-label-code text-[11px] text-on-surface-variant">14 / 15 Correct</span>
+</div>
+<div class="bg-surface-container-high/60 border border-outline-variant/30 rounded-xl p-space-sm flex flex-col items-center justify-center text-center">
+<span class="font-label-code text-[11px] text-on-surface-variant uppercase tracking-wider">Total Time</span>
+<span class="font-stat-counter text-stat-counter text-on-surface font-bold">11m 42s</span>
+<span class="font-label-code text-[11px] text-on-surface-variant">Avg 46.8s/Q</span>
+</div>
+<div class="bg-surface-container-high/60 border border-outline-variant/30 rounded-xl p-space-sm flex flex-col items-center justify-center text-center">
+<span class="font-label-code text-[11px] text-on-surface-variant uppercase tracking-wider">Multiplier</span>
+<span class="font-stat-counter text-stat-counter text-secondary font-bold">1.8x</span>
+<span class="font-label-code text-[11px] text-primary">Streak Surge</span>
+</div>
+</div>
+</div>
+<!-- Quick Nav Anchor Pills -->
+<div class="mt-space-lg pt-space-md border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1 rounded-full text-body-sm font-headline-sm bg-surface-container-highest/60 hover:bg-primary-container/30 hover:text-primary transition-all flex items-center gap-space-2xs text-on-surface" href="#analytics-grid">
+<span class="material-symbols-outlined text-sm" data-icon="analytics">analytics</span>
+<span>Analytics Dashboard</span>
+</a>
+<a class="px-space-sm py-1 rounded-full text-body-sm font-headline-sm bg-surface-container-highest/60 hover:bg-primary-container/30 hover:text-primary transition-all flex items-center gap-space-2xs text-on-surface" href="#leaderboard-section">
+<span class="material-symbols-outlined text-sm" data-icon="trophy">trophy</span>
+<span>Live Leaderboard</span>
+</a>
+<a class="px-space-sm py-1 rounded-full text-body-sm font-headline-sm bg-surface-container-highest/60 hover:bg-primary-container/30 hover:text-primary transition-all flex items-center gap-space-2xs text-on-surface" href="#review-section">
+<span class="material-symbols-outlined text-sm" data-icon="fact_check">fact_check</span>
+<span>Question Breakdown</span>
+</a>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="text-body-sm font-headline-sm text-primary hover:text-primary-fixed flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+<span>Download Certificate (PDF)</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Multi-Graph Analytics Grid (Bento Layout) -->
+<section class="space-y-space-md" id="analytics-grid">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary" data-icon="monitoring">monitoring</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Telemetry &amp; Deep Diagnostics</h2>
+</div>
+<span class="font-label-code text-label-code text-on-surface-variant">Model: Tactile-QC-v4.2</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- Graph 1: Time Taken Per Question (7 Cols) -->
+<div class="lg:col-span-7 glass-card rounded-xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant/20">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Response Latency Per Question</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Cadet response (purple) vs. Global cohort average (cyan dashed)</p>
+</div>
+<span class="font-label-code text-xs px-2 py-0.5 rounded bg-error-container/30 border border-error/30 text-error">Q05 Spiked (112s)</span>
+</div>
+<!-- Interactive SVG Bar & Line Overlay Chart -->
+<div class="py-space-md">
+<svg class="w-full h-56" preserveaspectratio="none" viewbox="0 0 540 180">
+<defs>
+<lineargradient id="barGradNormal" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#a078ff" stop-opacity="0.9"></stop>
+<stop offset="100%" stop-color="#3626ce" stop-opacity="0.3"></stop>
+</lineargradient>
+<lineargradient id="barGradAlert" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#ffb4ab" stop-opacity="0.95"></stop>
+<stop offset="100%" stop-color="#93000a" stop-opacity="0.4"></stop>
+</lineargradient>
+</defs>
+<!-- Grid guidelines -->
+<line stroke="#494454" stroke-dasharray="3,3" stroke-width="0.75" x1="30" x2="520" y1="20" y2="20"></line>
+<line stroke="#494454" stroke-dasharray="3,3" stroke-width="0.75" x1="30" x2="520" y1="60" y2="60"></line>
+<line stroke="#494454" stroke-dasharray="3,3" stroke-width="0.75" x1="30" x2="520" y1="100" y2="100"></line>
+<line stroke="#494454" stroke-dasharray="3,3" stroke-width="0.75" x1="30" x2="520" y1="140" y2="140"></line>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="9" text-anchor="end" x="22" y="24">120s</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="9" text-anchor="end" x="22" y="64">80s</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="9" text-anchor="end" x="22" y="104">40s</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="9" text-anchor="end" x="22" y="144">0s</text>
+<!-- 15 Bars for Questions -->
+<!-- Q1 --> <rect fill="url(#barGradNormal)" height="32" rx="3" width="16" x="42" y="108"></rect>
+<!-- Q2 --> <rect fill="url(#barGradNormal)" height="22" rx="3" width="16" x="74" y="118"></rect>
+<!-- Q3 --> <rect fill="url(#barGradNormal)" height="42" rx="3" width="16" x="106" y="98"></rect>
+<!-- Q4 --> <rect fill="url(#barGradNormal)" height="28" rx="3" width="16" x="138" y="112"></rect>
+<!-- Q5 - Spike (Incorrect) -->
+<rect class="animate-pulse" fill="url(#barGradAlert)" height="112" rx="3" width="16" x="170" y="28"></rect>
+<!-- Q6 --> <rect fill="url(#barGradNormal)" height="35" rx="3" width="16" x="202" y="105"></rect>
+<!-- Q7 --> <rect fill="url(#barGradNormal)" height="18" rx="3" width="16" x="234" y="122"></rect>
+<!-- Q8 --> <rect fill="url(#barGradNormal)" height="48" rx="3" width="16" x="266" y="92"></rect>
+<!-- Q9 --> <rect fill="url(#barGradNormal)" height="25" rx="3" width="16" x="298" y="115"></rect>
+<!-- Q10 --> <rect fill="url(#barGradNormal)" height="52" rx="3" width="16" x="330" y="88"></rect>
+<!-- Q11 --> <rect fill="url(#barGradNormal)" height="15" rx="3" width="16" x="362" y="125"></rect>
+<!-- Q12 --> <rect fill="url(#barGradNormal)" height="45" rx="3" width="16" x="394" y="95"></rect>
+<!-- Q13 --> <rect fill="url(#barGradNormal)" height="30" rx="3" width="16" x="426" y="110"></rect>
+<!-- Q14 --> <rect fill="url(#barGradNormal)" height="38" rx="3" width="16" x="458" y="102"></rect>
+<!-- Q15 --> <rect fill="url(#barGradNormal)" height="55" rx="3" width="16" x="490" y="85"></rect>
+<!-- Benchmark Cohort Line (Cyan dashed) -->
+<path d="M 50,105 Q 110,95 178,82 T 300,90 T 420,95 T 498,92" fill="none" stroke="#4cd7f6" stroke-dasharray="4,4" stroke-width="2"></path>
+<!-- Labels -->
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="8" text-anchor="middle" x="50" y="158">Q1</text>
+<text fill="#ffb4ab" font-family="JetBrains Mono" font-size="8" text-anchor="middle" x="178" y="158">Q5*</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="8" text-anchor="middle" x="338" y="158">Q10</text>
+<text fill="#958ea0" font-family="JetBrains Mono" font-size="8" text-anchor="middle" x="498" y="158">Q15</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-xs text-on-surface-variant font-label-code pt-space-2xs border-t border-outline-variant/10">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-primary"></span> Your Latency</span>
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-tertiary"></span> Cohort Benchmark (46.8s)</span>
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-error"></span> Latency Anomaly</span>
+</div>
+</div>
+<!-- Graph 2: Topic Mastery & Skill Matrix (5 Cols) -->
+<div class="lg:col-span-5 glass-card rounded-xl p-space-md flex flex-col justify-between">
+<div class="pb-space-xs border-b border-outline-variant/20">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Sub-Discipline Mastery</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Syllabus breakdown for QUIZ-QC-9804</p>
+</div>
+<div class="space-y-space-xs my-auto py-2">
+<div>
+<div class="flex justify-between text-body-sm font-body-sm mb-1">
+<span class="text-on-surface font-medium">Quantum Gates &amp; Unitary Ops</span>
+<span class="font-label-code text-tertiary">100% (3/3)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-tertiary w-full rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm font-body-sm mb-1">
+<span class="text-on-surface font-medium">Entanglement &amp; Bell States</span>
+<span class="font-label-code text-tertiary">100% (3/3)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-tertiary w-full rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm font-body-sm mb-1">
+<span class="text-on-surface font-medium">Shor's &amp; Grover's Algorithms</span>
+<span class="font-label-code text-error">66% (2/3)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-gradient-to-r from-error to-primary w-[66%] rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm font-body-sm mb-1">
+<span class="text-on-surface font-medium">Environmental Decoherence (T1/T2)</span>
+<span class="font-label-code text-tertiary">100% (3/3)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-tertiary w-full rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm font-body-sm mb-1">
+<span class="text-on-surface font-medium">Quantum Key Distribution (BB84)</span>
+<span class="font-label-code text-tertiary">100% (3/3)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-tertiary w-full rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-highest/40 border border-outline-variant/20 rounded-lg p-2.5 flex items-center gap-space-xs text-xs">
+<span class="material-symbols-outlined text-tertiary" data-icon="lightbulb">lightbulb</span>
+<span class="text-on-surface-variant">Recommended: Refresh modular exponentiation in Shor's phase estimation circuit.</span>
+</div>
+</div>
+<!-- Graph 3: Score Trajectory & XP Accumulation (6 Cols) -->
+<div class="lg:col-span-6 glass-card rounded-xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant/20">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Cumulative XP Velocity Curve</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Trajectory vs Top 10 Cadet average progression</p>
+</div>
+<span class="font-label-code text-xs text-tertiary font-semibold">+150 XP/Q Base</span>
+</div>
+<div class="py-space-sm">
+<svg class="w-full h-44" viewbox="0 0 450 140">
+<defs>
+<lineargradient id="areaGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4cd7f6" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#4cd7f6" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Baseline Grid -->
+<line stroke="#494454" stroke-width="0.5" x1="20" x2="430" y1="120" y2="120"></line>
+<line stroke="#494454" stroke-dasharray="2,2" stroke-width="0.5" x1="20" x2="430" y1="70" y2="70"></line>
+<line stroke="#494454" stroke-dasharray="2,2" stroke-width="0.5" x1="20" x2="430" y1="20" y2="20"></line>
+<!-- Top 10 avg curve (Violet dashed) -->
+<path d="M 20,120 C 100,105 200,75 320,40 S 410,25 430,22" fill="none" stroke="#a078ff" stroke-dasharray="4,4" stroke-width="2"></path>
+<!-- Alex Rivera curve (Cyan solid glowing area) -->
+<path d="M 20,120 Q 90,105 130,90 T 170,82 T 220,68 T 290,44 T 370,25 T 430,16 L 430,120 L 20,120 Z" fill="url(#areaGrad)"></path>
+<path d="M 20,120 Q 90,105 130,90 T 170,82 T 220,68 T 290,44 T 370,25 T 430,16" fill="none" stroke="#4cd7f6" stroke-width="2.5"></path>
+<!-- Highlight Dot Final -->
+<circle cx="430" cy="16" fill="#acedff" r="4" stroke="#003640" stroke-width="2"></circle>
+<text fill="#acedff" font-family="JetBrains Mono" font-size="9" text-anchor="end" x="425" y="10">2,100 XP</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-xs font-label-code text-on-surface-variant">
+<span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-tertiary"></span> Alex Rivera (Rank #2)</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-primary border-t border-dashed"></span> Top 10 Benchmark Mean</span>
+</div>
+</div>
+<!-- Graph 4: Speed vs. Accuracy Dispersion Matrix (6 Cols) -->
+<div class="lg:col-span-6 glass-card rounded-xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant/20">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Speed vs. Accuracy Quadrant</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Quadrant positioning of all 48 cohort cadets</p>
+</div>
+<span class="font-label-code text-xs text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">Zone: Elite Maestro</span>
+</div>
+<div class="relative py-space-sm h-44 flex items-center justify-center">
+<!-- Matrix visual -->
+<div class="w-full h-full border border-outline-variant/30 relative rounded-lg bg-surface-container-lowest/50 overflow-hidden">
+<!-- Quadrant crosshair -->
+<div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-outline-variant/40"></div>
+<div class="absolute top-1/2 left-0 right-0 h-[1px] bg-outline-variant/40"></div>
+<!-- Quadrant labels -->
+<span class="absolute top-2 left-2 text-[10px] font-label-code text-on-surface-variant/70">METHODICAL HIGH ACCURACY</span>
+<span class="absolute top-2 right-2 text-[10px] font-label-code text-tertiary font-bold">FAST &amp; ACCURATE (TARGET)</span>
+<span class="absolute bottom-2 left-2 text-[10px] font-label-code text-on-surface-variant/50">DELIBERATE / AT-RISK</span>
+<span class="absolute bottom-2 right-2 text-[10px] font-label-code text-error/60">RUSH RISK (LOW PRECISION)</span>
+<!-- Other cadets scatter points -->
+<div class="absolute top-[35%] left-[30%] w-1.5 h-1.5 rounded-full bg-outline"></div>
+<div class="absolute top-[45%] left-[40%] w-1.5 h-1.5 rounded-full bg-outline"></div>
+<div class="absolute top-[28%] left-[65%] w-1.5 h-1.5 rounded-full bg-outline"></div>
+<div class="absolute top-[60%] left-[80%] w-1.5 h-1.5 rounded-full bg-outline"></div>
+<div class="absolute top-[75%] left-[70%] w-1.5 h-1.5 rounded-full bg-outline"></div>
+<div class="absolute top-[22%] left-[82%] w-2 h-2 rounded-full bg-secondary-fixed"></div> <!-- 1st place -->
+<div class="absolute top-[38%] left-[75%] w-1.5 h-1.5 rounded-full bg-outline"></div>
+<!-- Alex Rivera highlighted node with pulsing ring -->
+<div class="absolute top-[20%] left-[78%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<span class="relative flex h-4 w-4">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-4 w-4 bg-tertiary border-2 border-surface-container-lowest"></span>
+</span>
+<span class="text-[10px] font-label-code text-tertiary font-bold whitespace-nowrap mt-0.5">YOU (Rank #2)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs font-label-code text-on-surface-variant">
+<span>X-Axis: Velocity (sec⁻¹)</span>
+<span class="text-tertiary font-medium">Percentile: 96th Velocity / 93rd Accuracy</span>
+<span>Y-Axis: Accuracy (%)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Real-Time Cosmic Leaderboard Section -->
+<section class="space-y-space-md" id="leaderboard-section">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div>
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-primary" data-icon="emoji_events">emoji_events</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Cosmic Fleet Leaderboard</h2>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Verified results for session QC-9804 • Quantum Computing Principles</p>
+</div>
+<!-- Filter tabs -->
+<div class="inline-flex p-1 rounded-full bg-surface-container-high border border-outline-variant/30 self-start sm:self-auto">
+<button class="px-space-sm py-1 rounded-full text-xs font-headline-sm font-semibold bg-primary text-on-primary shadow-sm transition-all">All Cadets (48)</button>
+<button class="px-space-sm py-1 rounded-full text-xs font-headline-sm font-normal text-on-surface-variant hover:text-on-surface transition-all">My Cohort (12)</button>
+<button class="px-space-sm py-1 rounded-full text-xs font-headline-sm font-normal text-on-surface-variant hover:text-on-surface transition-all">Top 10 Only</button>
+</div>
+</div>
+<!-- Top 3 Podium Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md items-end pt-6">
+<!-- 2nd Place: Alex Rivera (CurrentUser) -->
+<div class="order-2 md:order-1 glass-card rounded-2xl p-space-md border-primary/50 relative transform hover:-translate-y-1 transition-all bg-gradient-to-b from-primary-container/20 to-surface-container/90 shadow-lg shadow-primary/10">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-primary text-on-primary text-xs font-label-code font-bold uppercase tracking-wider flex items-center gap-1 shadow-md">
+<span class="material-symbols-outlined text-sm" data-icon="star">star</span>
+<span>2nd • YOU</span>
+</div>
+<div class="flex flex-col items-center text-center mt-3">
+<div class="w-16 h-16 rounded-full border-2 border-primary p-0.5 mb-2 relative">
+<img class="w-full h-full rounded-full object-cover" data-alt="High tech cyberpunk cadet avatar Alex Rivera portrait illuminated in dark room with cyan and violet neon light accents and high resolution visor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2wi9GC8JtKGwAz8CFYJ8cPyiUWn7vXp1gMPt_e7k8YStOpCNU1xN8itomvAg2V8yw2iG1RjrsH1oraoTcMqzUvniZVxg6gC3GoLB4PevFMsSOgP-COuk9_f_PStZEmrRwiYCToqT-2cMwxrBOsFmQBhK_ITcwVpofIANq5tnTwE1pbEjC4mNazGO2I2yfscNXZGjpcjJwggdbttFXhrV8PfcZNOekqwqlWDr3SKjZWNYhF4YPTxrD"/>
+<span class="absolute bottom-0 right-0 bg-primary text-on-primary text-[10px] font-label-code font-bold w-5 h-5 rounded-full flex items-center justify-center">2</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold">Alex Rivera</h4>
+<span class="font-label-code text-xs text-primary-fixed">@arivera • Quantum Cohort Alpha</span>
+<div class="mt-space-sm w-full bg-surface-container-highest/50 rounded-xl p-space-xs flex justify-around text-center">
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">XP</span>
+<span class="font-stat-counter text-base text-primary font-bold">2,100</span>
+</div>
+<div class="w-[1px] bg-outline-variant/30"></div>
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">ACC</span>
+<span class="font-stat-counter text-base text-tertiary font-bold">93.3%</span>
+</div>
+<div class="w-[1px] bg-outline-variant/30"></div>
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">TIME</span>
+<span class="font-stat-counter text-base text-on-surface font-bold">11m 42s</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 1st Place: Elena Vance (Champion) -->
+<div class="order-1 md:order-2 glass-card rounded-2xl p-space-lg border-tertiary/60 relative transform md:-translate-y-3 hover:-translate-y-4 transition-all bg-gradient-to-b from-tertiary-container/30 via-surface-container/90 to-surface-container-lowest shadow-xl shadow-tertiary/20">
+<div class="absolute -top-5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-tertiary text-on-tertiary text-xs font-label-code font-bold uppercase tracking-wider flex items-center gap-1 shadow-lg">
+<span class="material-symbols-outlined text-sm" data-icon="crown" data-weight="fill" style="font-variation-settings: 'FILL' 1;">crown</span>
+<span>1st • GRAND CHAMPION</span>
+</div>
+<div class="flex flex-col items-center text-center mt-3">
+<div class="w-20 h-20 rounded-full border-2 border-tertiary p-1 mb-2 relative ring-4 ring-tertiary/20">
+<img class="w-full h-full rounded-full object-cover" data-alt="Futuristic sci-fi champion avatar of Elena Vance in sleek silver cybernetic collar with warm golden and radiant cyan backlighting on dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcu3zs_r4KFbfcqz3RWXMwsrlm86KrOWjhHxJMn8nkQ9BJ__z9mBWtwtYg1FaQXX4uIKsS9LnDDgmVjB3S5092FtI6DIm49Jqo44qWYQ0mFG6BwByJafuYFaPmU9UBqCVRoL2DxxKGvrlfyCKjhRvnytXBbB1ivk6hsJC4LSUoTwSc-kXzXYys6JncDTCgd2wR_eW8g7wfKrscTooYamFqAFIoiImfMT35T3aMVMmJ7SBUhkaTP1cC"/>
+<span class="absolute bottom-0 right-0 bg-tertiary text-on-tertiary text-xs font-label-code font-bold w-6 h-6 rounded-full flex items-center justify-center">1</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-extrabold text-xl">Elena Vance</h4>
+<span class="font-label-code text-xs text-tertiary font-medium">@avance • MIT Q-Lab Affiliate</span>
+<div class="mt-space-sm w-full bg-surface-container-highest/60 rounded-xl p-space-sm flex justify-around text-center border border-tertiary/30">
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">TOTAL XP</span>
+<span class="font-stat-counter text-lg text-tertiary font-bold">2,210</span>
+</div>
+<div class="w-[1px] bg-outline-variant/30"></div>
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">ACCURACY</span>
+<span class="font-stat-counter text-lg text-tertiary font-bold">100%</span>
+</div>
+<div class="w-[1px] bg-outline-variant/30"></div>
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">TIME</span>
+<span class="font-stat-counter text-lg text-on-surface font-bold">10m 18s</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3rd Place: Marcus Chen -->
+<div class="order-3 glass-card rounded-2xl p-space-md border-secondary/40 relative transform hover:-translate-y-1 transition-all bg-gradient-to-b from-secondary-container/20 to-surface-container/90">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-xs font-label-code font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="workspace_premium">workspace_premium</span>
+<span>3rd Place</span>
+</div>
+<div class="flex flex-col items-center text-center mt-3">
+<div class="w-16 h-16 rounded-full border-2 border-secondary p-0.5 mb-2 relative">
+<img class="w-full h-full rounded-full object-cover" data-alt="Portrait avatar of Marcus Chen in technical deep space researcher gear with glowing violet interface reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUGXak7YN-F1SiI_ANCMoroWevNV-eYCN2BzY5ekJLjzbR-TMqUWQHVaMRrzJAfEQHOmpLOfZgc5fLDBNPKijN8E8MEHuQOL6yVFIYz75oSRXlPzGM8uSraUifqIaieMua8f9a66OQpaQBxM7F7lRj6BfqKZHNK8TpoHZnppZ2XTTUHw4iCRpQSKaTvzOhYOz7EhEdArTuNeTXIJXy_tIBRocB5AcZyNbD3zdrXoM-k7PhvD8LFMhG"/>
+<span class="absolute bottom-0 right-0 bg-secondary-container text-on-secondary-container text-[10px] font-label-code font-bold w-5 h-5 rounded-full flex items-center justify-center">3</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold">Marcus Chen</h4>
+<span class="font-label-code text-xs text-secondary-fixed">@mchen • ETH Zurich Fellow</span>
+<div class="mt-space-sm w-full bg-surface-container-highest/50 rounded-xl p-space-xs flex justify-around text-center">
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">XP</span>
+<span class="font-stat-counter text-base text-secondary font-bold">2,040</span>
+</div>
+<div class="w-[1px] bg-outline-variant/30"></div>
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">ACC</span>
+<span class="font-stat-counter text-base text-tertiary font-bold">93.3%</span>
+</div>
+<div class="w-[1px] bg-outline-variant/30"></div>
+<div>
+<span class="block text-[11px] font-label-code text-on-surface-variant">TIME</span>
+<span class="font-stat-counter text-base text-on-surface font-bold">12m 05s</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Scrollable Table -->
+<div class="glass-card rounded-2xl overflow-hidden border border-outline-variant/30">
+<div class="overflow-x-auto custom-scroll">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/30 bg-surface-container-highest/40 text-on-surface-variant font-label-code text-xs uppercase tracking-wider">
+<th class="py-space-sm px-space-md">Rank</th>
+<th class="py-space-sm px-space-md">Cadet</th>
+<th class="py-space-sm px-space-md">Affiliation / Status</th>
+<th class="py-space-sm px-space-md text-right">Accuracy</th>
+<th class="py-space-sm px-space-md text-right">Avg Response</th>
+<th class="py-space-sm px-space-md text-right">Streak XP</th>
+<th class="py-space-sm px-space-md text-right">Total XP</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 font-body-md text-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-space-sm px-space-md font-label-code font-bold text-tertiary">#01</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="military_tech">military_tech</span>
+<span class="font-headline-sm font-semibold text-on-surface">Elena Vance</span>
+<span class="font-label-code text-xs text-on-surface-variant">(@avance)</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface-variant text-xs">MIT Quantum Lab</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-tertiary font-semibold">100%</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-on-surface">41.2s</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-primary">+260 XP</td>
+<td class="py-space-sm px-space-md text-right font-stat-counter font-bold text-on-surface">2,210</td>
+</tr>
+<!-- Row 2 (Alex Rivera - Highlighted) -->
+<tr class="bg-primary-container/15 hover:bg-primary-container/25 transition-colors border-l-4 border-l-primary">
+<td class="py-space-sm px-space-md font-label-code font-bold text-primary">#02</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.5 rounded bg-primary text-on-primary text-[10px] font-label-code font-bold uppercase">YOU</span>
+<span class="font-headline-sm font-bold text-on-surface">Alex Rivera</span>
+<span class="font-label-code text-xs text-primary-fixed">(@arivera)</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface-variant text-xs">Tactile Cadet Cohort Alpha</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-tertiary font-semibold">93.3%</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-on-surface">46.8s</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-primary">+150 XP</td>
+<td class="py-space-sm px-space-md text-right font-stat-counter font-bold text-primary">2,100</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-space-sm px-space-md font-label-code font-bold text-secondary">#03</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="military_tech">military_tech</span>
+<span class="font-headline-sm font-semibold text-on-surface">Marcus Chen</span>
+<span class="font-label-code text-xs text-on-surface-variant">(@mchen)</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface-variant text-xs">ETH Zurich</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-tertiary font-semibold">93.3%</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-on-surface">48.3s</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-primary">+90 XP</td>
+<td class="py-space-sm px-space-md text-right font-stat-counter font-bold text-on-surface">2,040</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-space-sm px-space-md font-label-code font-bold text-on-surface-variant">#04</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm font-medium text-on-surface">Aria Starkova</span>
+<span class="font-label-code text-xs text-on-surface-variant">(@astark)</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface-variant text-xs">Imperial College London</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-tertiary font-semibold">86.7%</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-on-surface">39.1s</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-primary">+120 XP</td>
+<td class="py-space-sm px-space-md text-right font-stat-counter font-bold text-on-surface">1,970</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-space-sm px-space-md font-label-code font-bold text-on-surface-variant">#05</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm font-medium text-on-surface">Devon Ray</span>
+<span class="font-label-code text-xs text-on-surface-variant">(@dray)</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-on-surface-variant text-xs">Tokyo Tech Q-Group</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-tertiary font-semibold">86.7%</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-on-surface">51.4s</td>
+<td class="py-space-sm px-space-md text-right font-label-code text-primary">+60 XP</td>
+<td class="py-space-sm px-space-md text-right font-stat-counter font-bold text-on-surface">1,910</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-space-sm bg-surface-container-high/30 border-t border-outline-variant/20 flex items-center justify-between text-xs text-on-surface-variant font-label-code">
+<span>Displaying 5 of 48 cadets</span>
+<button class="text-primary hover:text-primary-fixed flex items-center gap-1 font-semibold">
+<span>Expand Full Cohort Standings</span>
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Comprehensive Per-Question Review Section -->
+<section class="space-y-space-md" id="review-section">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div>
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-tertiary" data-icon="fact_check">fact_check</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Full Question Breakdown &amp; Solutions</h2>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Review verified solutions, mathematical derivations, and pedagogical feedback</p>
+</div>
+<!-- Filter pills -->
+<div class="flex items-center gap-space-2xs self-start sm:self-auto overflow-x-auto py-1">
+<button class="px-3 py-1 rounded-full text-xs font-headline-sm font-semibold bg-primary text-on-primary">All (15)</button>
+<button class="px-3 py-1 rounded-full text-xs font-headline-sm font-normal bg-surface-container-high text-on-surface hover:text-primary transition-all">Correct (14)</button>
+<button class="px-3 py-1 rounded-full text-xs font-headline-sm font-normal bg-error-container/30 border border-error/30 text-error hover:bg-error-container/50 transition-all">Incorrect (1)</button>
+<button class="px-3 py-1 rounded-full text-xs font-headline-sm font-normal bg-surface-container-high text-on-surface hover:text-primary transition-all">Flagged (2)</button>
+</div>
+</div>
+<!-- Question Cards List -->
+<div class="space-y-space-md">
+<!-- Question 01 (Correct Example) -->
+<div class="glass-card rounded-2xl p-space-md md:p-space-lg space-y-space-md border border-outline-variant/30">
+<div class="flex flex-wrap items-center justify-between gap-space-xs border-b border-outline-variant/20 pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center font-label-code font-bold text-on-surface text-sm">01</span>
+<span class="px-2 py-0.5 rounded bg-tertiary/15 border border-tertiary/30 text-tertiary text-xs font-label-code">Difficulty: Intermediate</span>
+<span class="text-xs font-label-code text-on-surface-variant">Topic: Quantum Gates</span>
+</div>
+<div class="flex items-center gap-space-sm text-xs font-label-code">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span> 28s (Under avg by 18s)
+              </span>
+<span class="px-2 py-0.5 rounded bg-tertiary/20 text-tertiary font-bold">+150 XP</span>
+</div>
+</div>
+<div>
+<h4 class="font-headline-sm text-base md:text-lg text-on-surface font-semibold leading-relaxed">
+              Applying a Hadamard gate \( H \) followed by a Pauli-Z gate \( Z \) on the basis state \( |0\rangle \) yields which pure state?
+            </h4>
+</div>
+<!-- 4 Options Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-xs">
+<!-- Option A: Correct (Selected by Cadet) -->
+<div class="p-space-sm rounded-xl border border-tertiary/80 bg-tertiary/10 flex items-center justify-between shadow-sm shadow-tertiary/10">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-tertiary text-on-tertiary text-xs font-label-code font-bold flex items-center justify-center">A</span>
+<span class="font-label-code text-sm text-on-surface font-semibold">\( |-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) \)</span>
+</div>
+<div class="flex items-center gap-1 text-tertiary text-xs font-label-code font-bold">
+<span class="material-symbols-outlined text-base" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Your Answer • Correct</span>
+</div>
+</div>
+<!-- Option B -->
+<div class="p-space-sm rounded-xl border border-outline-variant/20 bg-surface-container-high/30 opacity-60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-label-code font-bold flex items-center justify-center">B</span>
+<span class="font-label-code text-sm text-on-surface-variant">\( |+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \)</span>
+</div>
+</div>
+<!-- Option C -->
+<div class="p-space-sm rounded-xl border border-outline-variant/20 bg-surface-container-high/30 opacity-60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-label-code font-bold flex items-center justify-center">C</span>
+<span class="font-label-code text-sm text-on-surface-variant">\( |1\rangle \)</span>
+</div>
+</div>
+<!-- Option D -->
+<div class="p-space-sm rounded-xl border border-outline-variant/20 bg-surface-container-high/30 opacity-60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-label-code font-bold flex items-center justify-center">D</span>
+<span class="font-label-code text-sm text-on-surface-variant">\( \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle) \)</span>
+</div>
+</div>
+</div>
+<!-- Solution Rationale Box -->
+<details class="group bg-surface-container-highest/30 border border-outline-variant/20 rounded-xl overflow-hidden" open="">
+<summary class="p-space-sm cursor-pointer list-none flex items-center justify-between text-body-sm font-headline-sm text-primary group-hover:text-primary-fixed">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-sm" data-icon="menu_book">menu_book</span>
+<span>Pedagogical Rationale &amp; Proof</span>
+</div>
+<span class="material-symbols-outlined transform group-open:rotate-180 transition-transform text-sm" data-icon="expand_more">expand_more</span>
+</summary>
+<div class="px-space-sm pb-space-sm text-body-sm text-on-surface-variant space-y-2 border-t border-outline-variant/10 pt-2 font-body-sm">
+<p>
+                First, the Hadamard operator puts \(|0\rangle\) into the equal superposition state: \(H|0\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) = |+\rangle\).
+              </p>
+<p>
+                Next, the Pauli-Z gate acts as a phase-flip operator: \(Z|0\rangle = |0\rangle\) and \(Z|1\rangle = -|1\rangle\). Therefore:
+              </p>
+<div class="p-2 rounded bg-surface-container-lowest font-label-code text-xs text-tertiary">
+                \( Z(H|0\rangle) = Z\left(\frac{|0\rangle + |1\rangle}{\sqrt{2}}\right) = \frac{|0\rangle - |1\rangle}{\sqrt{2}} = |-\rangle \)
+              </div>
+</div>
+</details>
+</div>
+<!-- Question 05 (INCORRECT QUESTION HIGHLIGHTED) -->
+<div class="glass-card rounded-2xl p-space-md md:p-space-lg space-y-space-md border-2 border-error/50 bg-gradient-to-br from-error-container/10 via-surface-container/90 to-surface-container-lowest relative overflow-hidden">
+<div class="absolute top-0 right-0 px-4 py-1 bg-error-container text-on-error-container font-label-code text-xs font-bold rounded-bl-xl uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="error">error</span>
+<span>Incorrect Answer Flagged</span>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-xs border-b border-outline-variant/20 pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-8 h-8 rounded-lg bg-error-container/40 border border-error/40 flex items-center justify-center font-label-code font-bold text-error text-sm">05</span>
+<span class="px-2 py-0.5 rounded bg-error-container/20 border border-error/30 text-error text-xs font-label-code">Difficulty: Advanced</span>
+<span class="text-xs font-label-code text-on-surface-variant">Topic: Shor's Phase Estimation</span>
+</div>
+<div class="flex items-center gap-space-sm text-xs font-label-code">
+<span class="text-error flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span> 112s (Spiked: +65s over avg)
+              </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-bold">+0 XP</span>
+</div>
+</div>
+<div>
+<h4 class="font-headline-sm text-base md:text-lg text-on-surface font-semibold leading-relaxed">
+              In Shor's Algorithm for integer factorization of \( N = pq \), what is the primary computational bottleneck handled on the classical coprocessor rather than the quantum processing unit?
+            </h4>
+</div>
+<!-- 4 Options Grid with clear distinction -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-xs">
+<!-- Option A: User's Incorrect Choice -->
+<div class="p-space-sm rounded-xl border-2 border-error bg-error-container/25 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-error text-on-error text-xs font-label-code font-bold flex items-center justify-center">A</span>
+<span class="font-label-code text-sm text-on-surface font-medium">Computing the Quantum Fourier Transform (QFT)</span>
+</div>
+<div class="flex items-center gap-1 text-error text-xs font-label-code font-bold">
+<span class="material-symbols-outlined text-base" data-icon="cancel">cancel</span>
+<span>Your Selection</span>
+</div>
+</div>
+<!-- Option B: The True Correct Answer -->
+<div class="p-space-sm rounded-xl border-2 border-tertiary bg-tertiary/15 flex items-center justify-between shadow-md shadow-tertiary/20">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-tertiary text-on-tertiary text-xs font-label-code font-bold flex items-center justify-center">B</span>
+<span class="font-label-code text-sm text-on-surface font-semibold">Continued fraction expansion &amp; GCD extraction</span>
+</div>
+<div class="flex items-center gap-1 text-tertiary text-xs font-label-code font-bold">
+<span class="material-symbols-outlined text-base" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Correct Solution</span>
+</div>
+</div>
+<!-- Option C -->
+<div class="p-space-sm rounded-xl border border-outline-variant/20 bg-surface-container-high/30 opacity-60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-label-code font-bold flex items-center justify-center">C</span>
+<span class="font-label-code text-sm text-on-surface-variant">Generating initial superposition over \( 2^n \) states</span>
+</div>
+</div>
+<!-- Option D -->
+<div class="p-space-sm rounded-xl border border-outline-variant/20 bg-surface-container-high/30 opacity-60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-label-code font-bold flex items-center justify-center">D</span>
+<span class="font-label-code text-sm text-on-surface-variant">Unitary modular exponentiation \( a^x \pmod N \)</span>
+</div>
+</div>
+</div>
+<!-- In-depth Scientific Rationale Box -->
+<div class="bg-surface-container-lowest/80 border border-error/30 rounded-xl p-space-md space-y-space-xs">
+<div class="flex items-center gap-space-2xs text-error font-headline-sm text-sm font-semibold">
+<span class="material-symbols-outlined text-base" data-icon="psychology">psychology</span>
+<span>Diagnostic Breakdown &amp; Why You Slipped:</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+              The Quantum Fourier Transform (QFT) is executed completely on the <strong>quantum register</strong> in \( \mathcal{O}(n^2) \) gates to reveal the period phase \( s/r \). Once the measurement is collapsed, the resulting phase estimate is passed to the <strong>classical processor</strong>.
+            </p>
+<div class="p-space-xs rounded-lg bg-surface-container-high/60 border border-outline-variant/30 font-label-code text-xs text-tertiary leading-normal">
+              Formula: \( \frac{s}{r} \approx \frac{y}{2^n} \implies \gcd(a^{r/2} \pm 1, N) \) via classical Euclidean Algorithm in polynomial time \( \mathcal{O}(\log^3 N) \).
+            </div>
+<p class="text-xs text-on-surface-variant italic">
+              Key takeaway: Quantum devices solve only the non-polynomial Period-Finding subroutine; classic arithmetic handles continued fractions.
+            </p>
+</div>
+</div>
+<!-- Question 12 (Correct Example - Entanglement) -->
+<div class="glass-card rounded-2xl p-space-md md:p-space-lg space-y-space-md border border-outline-variant/30">
+<div class="flex flex-wrap items-center justify-between gap-space-xs border-b border-outline-variant/20 pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center font-label-code font-bold text-on-surface text-sm">12</span>
+<span class="px-2 py-0.5 rounded bg-tertiary/15 border border-tertiary/30 text-tertiary text-xs font-label-code">Difficulty: Intermediate</span>
+<span class="text-xs font-label-code text-on-surface-variant">Topic: Decoherence &amp; Coherence Times</span>
+</div>
+<div class="flex items-center gap-space-sm text-xs font-label-code">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span> 35s (Standard pace)
+              </span>
+<span class="px-2 py-0.5 rounded bg-tertiary/20 text-tertiary font-bold">+150 XP</span>
+</div>
+</div>
+<div>
+<h4 class="font-headline-sm text-base md:text-lg text-on-surface font-semibold leading-relaxed">
+              What distinguishes longitudinal relaxation time (\( T_1 \)) from transverse dephasing time (\( T_2 \)) in superconducting transmon qubits?
+            </h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-xs">
+<!-- Option A -->
+<div class="p-space-sm rounded-xl border border-outline-variant/20 bg-surface-container-high/30 opacity-60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-label-code font-bold flex items-center justify-center">A</span>
+<span class="font-label-code text-sm text-on-surface-variant">\( T_1 \) measures phase loss; \( T_2 \) measures thermal heating</span>
+</div>
+</div>
+<!-- Option B: Correct (Selected) -->
+<div class="p-space-sm rounded-xl border border-tertiary/80 bg-tertiary/10 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-tertiary text-on-tertiary text-xs font-label-code font-bold flex items-center justify-center">B</span>
+<span class="font-label-code text-sm text-on-surface font-semibold">\( T_1 \) is energy relaxation \( |1\rangle \to |0\rangle \); \( T_2 \) is phase decoherence</span>
+</div>
+<div class="flex items-center gap-1 text-tertiary text-xs font-label-code font-bold">
+<span class="material-symbols-outlined text-base" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Correct</span>
+</div>
+</div>
+<!-- Option C -->
+<div class="p-space-sm rounded-xl border border-outline-variant/20 bg-surface-container-high/30 opacity-60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-label-code font-bold flex items-center justify-center">C</span>
+<span class="font-label-code text-sm text-on-surface-variant">\( T_2 \) is always strictly greater than \( 2T_1 \)</span>
+</div>
+</div>
+<!-- Option D -->
+<div class="p-space-sm rounded-xl border border-outline-variant/20 bg-surface-container-high/30 opacity-60 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-label-code font-bold flex items-center justify-center">D</span>
+<span class="font-label-code text-sm text-on-surface-variant">Both describe identical dissipative phonon coupling</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination / Review Navigation -->
+<div class="flex items-center justify-between pt-space-xs">
+<span class="font-label-code text-xs text-on-surface-variant">Showing Questions 1, 5, &amp; 12 of 15</span>
+<button class="px-space-md py-2 rounded-full bg-surface-container-high border border-outline-variant/40 hover:border-primary/50 text-on-surface text-body-sm font-headline-sm transition-all flex items-center gap-1">
+<span>Load All 15 Questions</span>
+<span class="material-symbols-outlined text-sm" data-icon="unfold_more">unfold_more</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Shared Component Anchor: Footer -->
+<footer class="w-full docked full-width border-t border-outline-variant/20 bg-surface-container-lowest dark:bg-surface-container-lowest flat no shadows relative z-20">
+<div class="max-w-max-width-canvas mx-auto px-gutter-desktop py-space-2xl flex flex-col md:flex-row justify-between items-center gap-space-lg">
+<div class="flex flex-col items-center md:items-start gap-space-xs">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<span class="text-headline-sm font-headline-sm text-primary dark:text-primary font-bold">QuizzCraft.app</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-left">
+          © 2025 QuizzCraft.app. All rights reserved. Tactile AI engines operational.
+        </p>
+</div>
+<!-- Footer Navigation Links -->
+<nav class="flex flex-wrap justify-center gap-space-md text-body-sm font-body-sm">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary-fixed dark:hover:text-primary-fixed hover:opacity-80 transition-all duration-200" href="#">Architecture</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary-fixed dark:hover:text-primary-fixed hover:opacity-80 transition-all duration-200" href="#">API</a>
+<a class="text-primary dark:text-primary font-body-sm hover:opacity-80 transition-all duration-200" href="#">Status</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary-fixed dark:hover:text-primary-fixed hover:opacity-80 transition-all duration-200" href="#">Security</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary-fixed dark:hover:text-primary-fixed hover:opacity-80 transition-all duration-200" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary-fixed dark:hover:text-primary-fixed hover:opacity-80 transition-all duration-200" href="#">Terms of Service</a>
+</nav>
+</div>
+</footer>
+<!-- Interactive Parallax Cursor Script -->
+<script>
+    document.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      const xRatio = (clientX / window.innerWidth - 0.5) * 30;
+      const yRatio = (clientY / window.innerHeight - 0.5) * 30;
+
+      const n1 = document.getElementById('nebula-1');
+      const n2 = document.getElementById('nebula-2');
+      const n3 = document.getElementById('nebula-3');
+
+      if (n1) n1.style.transform = `translate(${xRatio * 1.5}px, ${yRatio * 1.5}px)`;
+      if (n2) n2.style.transform = `translate(${-xRatio * 1.2}px, ${-yRatio * 1.2}px)`;
+      if (n3) n3.style.transform = `translate(${xRatio * 0.8}px, ${yRatio * 0.8}px)`;
+    });
+  </script>
+</body></html>

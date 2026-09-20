@@ -1,0 +1,72 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  darkMode: "class",
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-lowest": "#05070d",
+        "surface-container-low": "#0b0f19",
+        "surface-container": "#111624",
+        "surface-container-high": "#181f32",
+        "surface-container-highest": "#202840",
+        "surface-bright": "#2a3454",
+        "surface-dim": "#0f131d",
+        "surface": "#090d16",
+        "background": "#05070f",
+        "on-background": "#dfe2f1",
+        "on-surface": "#dfe2f1",
+        "on-surface-variant": "#a2abbf",
+        "outline": "#958ea0",
+        "outline-variant": "#2b3449",
+        "primary": "#d0bcff",
+        "primary-container": "#8b5cf6",
+        "primary-fixed": "#e9ddff",
+        "primary-fixed-dim": "#d0bcff",
+        "on-primary": "#3c0091",
+        "on-primary-fixed": "#23005c",
+        "secondary": "#c3c0ff",
+        "secondary-container": "#3626ce",
+        "secondary-fixed": "#e2dfff",
+        "secondary-fixed-dim": "#c3c0ff",
+        "on-secondary": "#1d00a5",
+        "tertiary": "#2fe6c7",
+        "tertiary-container": "#009eb9",
+        "tertiary-fixed": "#acedff",
+        "tertiary-fixed-dim": "#4cd7f6",
+        "on-tertiary": "#003640",
+        "amber-accent": "#ffc24d",
+        "error": "#ffb4ab",
+        "error-container": "#93000a",
+      },
+      fontFamily: {
+        "label-code": ["JetBrains Mono", "monospace"],
+        "body-sm": ["Outfit", "sans-serif"],
+        "body-md": ["Outfit", "sans-serif"],
+        "body-lg": ["Outfit", "sans-serif"],
+        "headline-sm": ["Sora", "sans-serif"],
+        "headline-lg": ["Sora", "sans-serif"],
+        "headline-xl": ["Sora", "sans-serif"],
+        "display-hero": ["Sora", "sans-serif"],
+        "kanji": ["Noto Serif JP", "serif"],
+        "stat-counter": ["JetBrains Mono", "monospace"],
+      },
+      spacing: {
+        "max-width-canvas": "1340px",
+        "gutter-desktop": "2.5rem",
+        "gutter-mobile": "1.25rem",
+      },
+      boxShadow: {
+        "glow-cyan": "0 0 15px #2fe6c7, 0 0 30px #2fe6c7",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;

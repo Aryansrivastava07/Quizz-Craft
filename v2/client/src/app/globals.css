@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  body {
+    background-color: #05070f;
+    color: #dfe2f1;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* Chrome/Edge autofill dark styling fix */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #0b0f19 inset !important;
+    -webkit-text-fill-color: #dfe2f1 !important;
+    caret-color: #dfe2f1 !important;
+    border-radius: inherit !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Static, Subdued Ambient Nebular Gradients */
+.nebula-violet {
+  opacity: 0.18;
+}
+
+.nebula-cyan {
+  opacity: 0.14;
+}
+
+/* Scanner Laser Effect */
+@keyframes scanSweep {
+  0% {
+    top: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    top: 96%;
+    opacity: 1;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.8;
+  }
+}
+
+.laser-scanner {
+  animation: scanSweep 3.2s ease-in-out infinite;
+  box-shadow: 0 0 15px #2fe6c7, 0 0 30px #2fe6c7;
+}
+
+/* Japanese Chapter Calligraphy Watermark */
+.chapter-watermark {
+  font-family: 'Noto Serif JP', serif;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Glass Paneling */
+.glass-kage {
+  background: linear-gradient(135deg, rgba(17, 22, 36, 0.72) 0%, rgba(9, 13, 22, 0.90) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.7), inset 0 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.glass-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-6px);
+  border-color: rgba(208, 188, 255, 0.4);
+  box-shadow: 0 20px 45px -10px rgba(139, 92, 246, 0.3), 0 0 30px -5px rgba(47, 230, 199, 0.2);
+}
+
+/* 3D Perspective Card Stack */
+.perspective-1400 {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.tilt-rig {
+  transition: transform 0.15s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Subtle Distant Planet Frame */
+.planet-static {
+  transform: rotate(-12deg);
+}
+
+/* Floating Torii Silhouette or Mountain Ridge */
+.silhouette-ridge {
+  background: radial-gradient(ellipse at bottom, rgba(30, 20, 60, 0.5) 0%, rgba(5, 7, 15, 0) 70%);
+}
+
+/* XP Particle Pop */
+@keyframes xpPop {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-16px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-28px) scale(1);
+    opacity: 0;
+  }
+}
+
+.xp-particle-fx {
+  animation: xpPop 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Chapter Navigation Active Pill */
+.nav-chapter.active {
+  color: #2fe6c7;
+  border-color: rgba(47, 230, 199, 0.5);
+  background: rgba(47, 230, 199, 0.1);
+}
+
+/* ========================================================================= */
+/* CREATE QUIZ PAGE COSMIC SYSTEM & VISUAL TOKENS                            */
+/* ========================================================================= */
+
+.cosmic-space-canvas {
+  background: linear-gradient(180deg, #020205 0%, #050510 45%, #07071A 100%);
+}
+
+/* Ambient Nebulae */
+.nebula-purple {
+  background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.18) 0%, rgba(88, 28, 135, 0.08) 45%, transparent 75%);
+  filter: blur(48px);
+}
+
+.nebula-cyan {
+  background: radial-gradient(circle at 50% 50%, rgba(76, 215, 246, 0.14) 0%, rgba(6, 182, 212, 0.06) 45%, transparent 75%);
+  filter: blur(52px);
+}
+
+.nebula-indigo {
+  background: radial-gradient(circle at 50% 50%, rgba(54, 38, 206, 0.16) 0%, rgba(30, 27, 75, 0.08) 50%, transparent 80%);
+  filter: blur(60px);
+}
+
+/* Staggered Static Starfield Layers */
+.stars-far {
+  background-image: 
+    radial-gradient(1px 1px at 40px 60px, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1px 1px at 120px 240px, rgba(208, 188, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 280px 110px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 390px 420px, rgba(172, 237, 255, 0.65), transparent),
+    radial-gradient(1px 1px at 540px 190px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 670px 330px, rgba(208, 188, 255, 0.55), transparent),
+    radial-gradient(1px 1px at 810px 90px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 950px 270px, rgba(172, 237, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 1120px 440px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 1240px 180px, rgba(208, 188, 255, 0.65), transparent);
+  background-size: 650px 650px;
+}
+
+.stars-near {
+  background-image: 
+    radial-gradient(1.5px 1.5px at 90px 130px, #ffffff, transparent),
+    radial-gradient(2px 2px at 220px 350px, #acedff, transparent),
+    radial-gradient(1.5px 1.5px at 460px 80px, #ffffff, transparent),
+    radial-gradient(2px 2px at 610px 290px, #e9ddff, transparent),
+    radial-gradient(1.5px 1.5px at 780px 470px, #ffffff, transparent),
+    radial-gradient(2px 2px at 990px 150px, #acedff, transparent),
+    radial-gradient(1.5px 1.5px at 1180px 320px, #ffffff, transparent);
+  background-size: 520px 520px;
+}
+
+/* Planetary Body & Orbital Rings */
+.planet-glow-purple {
+  background: radial-gradient(circle at 35% 35%, #7e57c2 0%, #311b92 65%, #0d0a27 100%);
+  box-shadow: inset -10px -10px 30px rgba(0, 0, 0, 0.8), 0 0 45px rgba(160, 120, 255, 0.28);
+}
+
+.planet-glow-cyan {
+  background: radial-gradient(circle at 35% 35%, #00acc1 0%, #004d40 70%, #041219 100%);
+  box-shadow: inset -8px -8px 24px rgba(0, 0, 0, 0.85), 0 0 35px rgba(76, 215, 246, 0.25);
+}
+
+.orbit-ring {
+  border: 1px solid rgba(208, 188, 255, 0.22);
+  border-radius: 50%;
+  transform: rotateX(75deg) rotateY(-18deg);
+  box-shadow: 0 0 15px rgba(160, 120, 255, 0.15);
+}
+
+/* Mature single-color kinetic button */
+.btn-kinetic {
+  background-color: #8b5cf6;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 8px 20px -6px rgba(139, 92, 246, 0.4);
+}
+
+.btn-kinetic:hover {
+  background-color: #7c3aed;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 10px 24px -5px rgba(139, 92, 246, 0.55);
+}
+
+/* Source Active Glow Borders */
+.border-emerald-active {
+  border-color: #10B981;
+  box-shadow: inset 0 0 15px rgba(16, 185, 129, 0.12), 0 0 20px rgba(16, 185, 129, 0.25);
+}
+
+.border-violet-active {
+  border-color: #a078ff;
+  box-shadow: inset 0 0 15px rgba(160, 120, 255, 0.12), 0 0 20px rgba(160, 120, 255, 0.25);
+}
+
+/* Smooth parallax shift transitions */
+.parallax-layer {
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+/* Cosmic Particle & Nebula Depth from Stitch Auth */
+.cosmic-void {
+  background-color: #050711;
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(160, 120, 255, 0.14) 0%, transparent 55%),
+    radial-gradient(circle at 85% 80%, rgba(76, 215, 246, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 10% 85%, rgba(54, 38, 206, 0.12) 0%, transparent 50%);
+}
+
+.luminous-card {
+  background: linear-gradient(145deg, rgba(28, 31, 42, 0.75) 0%, rgba(10, 14, 24, 0.85) 100%);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.85), inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+}
