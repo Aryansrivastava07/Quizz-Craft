@@ -1,7 +1,7 @@
 [build]
   base = "client"
   publish = "dist"
-  command = "pnpm install && pnpm run build"
+  command = "npm install --include=optional && npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
