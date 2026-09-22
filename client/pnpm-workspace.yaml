@@ -1,6 +1,13 @@
 packages:
   - '.'
 
+supportedArchitectures:
+  os:
+    - win32
+    - linux
+  cpu:
+    - x64
+
 allowBuilds:
   core-js: true
   esbuild: true
